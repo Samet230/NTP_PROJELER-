@@ -1,0 +1,10 @@
+C:\Users\smt1s\source\repos\KeyLogger\KeyLogger\bin\Debug\KeyLogger.exe.config
+C:\Users\smt1s\source\repos\KeyLogger\KeyLogger\bin\Debug\KeyLogger.exe
+C:\Users\smt1s\source\repos\KeyLogger\KeyLogger\bin\Debug\KeyLogger.pdb
+C:\Users\smt1s\source\repos\KeyLogger\KeyLogger\obj\Debug\KeyLogger.csproj.AssemblyReference.cache
+C:\Users\smt1s\source\repos\KeyLogger\KeyLogger\obj\Debug\KeyLogger.Properties.Resources.resources
+C:\Users\smt1s\source\repos\KeyLogger\KeyLogger\obj\Debug\KeyLogger.csproj.GenerateResource.cache
+C:\Users\smt1s\source\repos\KeyLogger\KeyLogger\obj\Debug\KeyLogger.csproj.CoreCompileInputs.cache
+C:\Users\smt1s\source\repos\KeyLogger\KeyLogger\obj\Debug\KeyLogger.exe
+C:\Users\smt1s\source\repos\KeyLogger\KeyLogger\obj\Debug\KeyLogger.pdb
+C:\Users\smt1s\source\repos\KeyLogger\KeyLogger\obj\Debug\KeyLogger.exe.config
