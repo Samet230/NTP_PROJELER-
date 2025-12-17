@@ -1,0 +1,402 @@
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace ChatSocketApp
+{
+    public partial class Form1 : Form
+    {
+        private Socket clientSocket;
+        private string username;
+        private bool isConnected = false;
+        private BindingList<ChatMessage> messages = new BindingList<ChatMessage>();
+
+        // UI Kontrolleri (WinForms)
+        private Panel topPanel;
+        private Label serverLabel;
+        private TextBox serverTextBox;
+        private Label portLabel;
+        private NumericUpDown portNumericUpDown;
+        private Label usernameLabel;
+        private TextBox usernameTextBox;
+        private Button connectButton;
+        private Button disconnectButton;
+        private Label statusLabel;
+
+        private DataGridView messageGridView;
+
+        private Panel bottomPanel;
+        private TextBox messageTextBox;
+        private Button sendButton;
+
+        public Form1()
+        {
+            InitializeComponent(); // from Designer
+            InitializeUI();
+        }
+
+        // Keep designer InitializeComponent in Form1.Designer.cs. Provide Load handler referenced there.
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // Ensure message box is editable and focused so user can type immediately
+            try
+            {
+                if (messageTextBox != null)
+                {
+                    messageTextBox.ReadOnly = false;
+                    messageTextBox.Enabled = true;
+                    messageTextBox.TabStop = true;
+                    messageTextBox.Focus();
+                }
+            }
+            catch { }
+        }
+
+        private void InitializeUI()
+        {
+            // ===== ÜST PANEL - BAĞLANTI AYARLARI =====
+            topPanel = new Panel();
+            topPanel.Dock = DockStyle.Top;
+            topPanel.Height = 120;
+            topPanel.BackColor = Color.FromArgb(240, 240, 240);
+            topPanel.Padding = new Padding(10);
+            this.Controls.Add(topPanel);
+
+            // Server Adresi
+            serverLabel = new Label();
+            serverLabel.Text = "Server:";
+            serverLabel.Location = new Point(10, 10);
+            serverLabel.Width = 50;
+            topPanel.Controls.Add(serverLabel);
+
+            serverTextBox = new TextBox();
+            serverTextBox.Text = "127.0.0.1";
+            serverTextBox.Location = new Point(70, 10);
+            serverTextBox.Width = 120;
+            topPanel.Controls.Add(serverTextBox);
+
+            // Port
+            portLabel = new Label();
+            portLabel.Text = "Port:";
+            portLabel.Location = new Point(200, 10);
+            portLabel.Width = 40;
+            topPanel.Controls.Add(portLabel);
+
+            portNumericUpDown = new NumericUpDown();
+            portNumericUpDown.Minimum = 1;
+            portNumericUpDown.Maximum = 65535;
+            portNumericUpDown.Value = 5000;
+            portNumericUpDown.Location = new Point(250, 10);
+            portNumericUpDown.Width = 80;
+            topPanel.Controls.Add(portNumericUpDown);
+
+            // Kullanıcı Adı
+            usernameLabel = new Label();
+            usernameLabel.Text = "Kullanıcı Adı:";
+            usernameLabel.Location = new Point(350, 10);
+            usernameLabel.Width = 80;
+            topPanel.Controls.Add(usernameLabel);
+
+            usernameTextBox = new TextBox();
+            usernameTextBox.Location = new Point(440, 10);
+            usernameTextBox.Width = 120;
+            topPanel.Controls.Add(usernameTextBox);
+
+            // Bağlan Butonu
+            connectButton = new Button();
+            connectButton.Text = "Bağlan";
+            connectButton.Location = new Point(570, 10);
+            connectButton.Width = 100;
+            connectButton.Height = 25;
+            connectButton.Click += ConnectButton_Click;
+            topPanel.Controls.Add(connectButton);
+
+            // Bağlantıyı Kes Butonu
+            disconnectButton = new Button();
+            disconnectButton.Text = "Bağlantıyı Kes";
+            disconnectButton.Location = new Point(680, 10);
+            disconnectButton.Width = 100;
+            disconnectButton.Height = 25;
+            disconnectButton.Click += DisconnectButton_Click;
+            disconnectButton.Enabled = false;
+            topPanel.Controls.Add(disconnectButton);
+
+            // Durum Etiketi
+            statusLabel = new Label();
+            statusLabel.Text = "❌ Bağlı Değil";
+            statusLabel.ForeColor = Color.Red;
+            statusLabel.Location = new Point(10, 50);
+            statusLabel.Width = 200;
+            topPanel.Controls.Add(statusLabel);
+
+            // ===== ORTA PANEL - MESAJLAR =====
+            messageGridView = new DataGridView();
+            messageGridView.Dock = DockStyle.Fill;
+            messageGridView.AutoGenerateColumns = false;
+            messageGridView.AllowUserToAddRows = false;
+            messageGridView.ReadOnly = true;
+            messageGridView.RowHeadersVisible = false;
+
+            var colSender = new DataGridViewTextBoxColumn();
+            colSender.DataPropertyName = "Gönderen";
+            colSender.HeaderText = "Gönderen";
+            colSender.Width = 120;
+            messageGridView.Columns.Add(colSender);
+
+            var colMessage = new DataGridViewTextBoxColumn();
+            colMessage.DataPropertyName = "Mesaj";
+            colMessage.HeaderText = "Mesaj";
+            colMessage.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            messageGridView.Columns.Add(colMessage);
+
+            var colTime = new DataGridViewTextBoxColumn();
+            colTime.DataPropertyName = "Zaman";
+            colTime.HeaderText = "Zaman";
+            colTime.Width = 100;
+            messageGridView.Columns.Add(colTime);
+
+            messageGridView.DataSource = messages;
+            this.Controls.Add(messageGridView);
+
+            // ===== ALT PANEL - MESAJ GÖNDERME =====
+            bottomPanel = new Panel();
+            bottomPanel.Dock = DockStyle.Bottom;
+            bottomPanel.Height = 100;
+            bottomPanel.BackColor = Color.FromArgb(240, 240, 240);
+            bottomPanel.Padding = new Padding(10);
+            this.Controls.Add(bottomPanel);
+
+            // Mesaj TextBox (multiline)
+            messageTextBox = new TextBox();
+            messageTextBox.Location = new Point(10, 10);
+            messageTextBox.Width = 650;
+            messageTextBox.Height = 80;
+            messageTextBox.Multiline = true;
+            messageTextBox.ScrollBars = ScrollBars.Both;
+            bottomPanel.Controls.Add(messageTextBox);
+
+            // Gönder Butonu
+            sendButton = new Button();
+            sendButton.Text = "Gönder";
+            sendButton.Location = new Point(670, 10);
+            sendButton.Width = 100;
+            sendButton.Height = 80;
+            sendButton.Click += SendButton_Click;
+            sendButton.Enabled = false;
+            bottomPanel.Controls.Add(sendButton);
+
+            // Ensure controls z-order: top panel, grid, bottom
+            topPanel.BringToFront();
+            bottomPanel.BringToFront();
+        }
+
+        private void ConnectButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(usernameTextBox.Text))
+            {
+                MessageBox.Show("Lütfen kullanıcı adı girin!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            username = usernameTextBox.Text;
+
+            try
+            {
+                clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                clientSocket.Connect(new IPEndPoint(IPAddress.Parse(serverTextBox.Text), (int)portNumericUpDown.Value));
+                isConnected = true;
+
+                // Bağlantı mesajı gönder
+                string connectMsg = $"CONNECT:{username}";
+                clientSocket.Send(Encoding.UTF8.GetBytes(connectMsg));
+
+                statusLabel.Text = "✓ Bağlı";
+                statusLabel.ForeColor = Color.Green;
+                connectButton.Enabled = false;
+                disconnectButton.Enabled = true;
+                sendButton.Enabled = true;
+                usernameTextBox.Enabled = false;
+                serverTextBox.Enabled = false;
+                portNumericUpDown.Enabled = false;
+
+                AddSystemMessage($"{username} sunucuya bağlandı");
+
+                Task.Run(() => ReceiveMessages());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Bağlantı hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isConnected = false;
+            }
+        }
+
+        private void DisconnectButton_Click(object sender, EventArgs e)
+        {
+            Disconnect();
+        }
+
+        private void SendButton_Click(object sender, EventArgs e)
+        {
+            if (!isConnected || string.IsNullOrEmpty(messageTextBox.Text))
+            {
+                MessageBox.Show("Bağlı değilsiniz veya mesaj boş!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                string message = messageTextBox.Text.Trim();
+                string fullMsg = $"{username}: {message}";
+                byte[] data = Encoding.UTF8.GetBytes(fullMsg);
+                clientSocket.Send(data);
+
+                AddMessage(username, message, "Benden");
+                messageTextBox.Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Mesaj gönderme hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ReceiveMessages()
+        {
+            byte[] buffer = new byte[4096];
+
+            try
+            {
+                while (isConnected)
+                {
+                    int bytesRead = clientSocket.Receive(buffer);
+
+                    if (bytesRead > 0)
+                    {
+                        string receivedMsg = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+
+                        this.Invoke((Action)(() =>
+                        {
+                            if (receivedMsg.StartsWith("CONNECT:"))
+                            {
+                                string user = receivedMsg.Replace("CONNECT:", "");
+                                AddSystemMessage($"{user} sohbete katıldı");
+                            }
+                            else if (receivedMsg.Contains(":"))
+                            {
+                                string[] parts = receivedMsg.Split(new[] { ':' }, 2);
+                                if (parts.Length == 2)
+                                {
+                                    AddMessage(parts[0], parts[1].Trim(), "Diğerleri");
+                                }
+                            }
+                        }));
+                    }
+                    else
+                    {
+                        isConnected = false;
+                    }
+                }
+            }
+            catch
+            {
+                if (isConnected)
+                {
+                    this.Invoke((Action)(() =>
+                    {
+                        MessageBox.Show("Sunucu bağlantısı kesildi!", "Bağlantı Hatası", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Disconnect();
+                    }));
+                }
+            }
+        }
+
+        private void AddMessage(string sender, string messageText, string type)
+        {
+            var msg = new ChatMessage
+            {
+                Gönderen = sender,
+                Mesaj = messageText,
+                Zaman = DateTime.Now.ToString("HH:mm:ss"),
+                Tip = type
+            };
+
+            messages.Add(msg);
+
+            // Son mesaja kaydır
+            if (messageGridView.RowCount > 0)
+            {
+                try
+                {
+                    messageGridView.FirstDisplayedScrollingRowIndex = messageGridView.RowCount - 1;
+                }
+                catch { }
+            }
+        }
+
+        private void AddSystemMessage(string message)
+        {
+            var msg = new ChatMessage
+            {
+                Gönderen = "SİSTEM",
+                Mesaj = message,
+                Zaman = DateTime.Now.ToString("HH:mm:ss"),
+                Tip = "Sistem"
+            };
+
+            messages.Add(msg);
+
+            if (messageGridView.RowCount > 0)
+            {
+                try
+                {
+                    messageGridView.FirstDisplayedScrollingRowIndex = messageGridView.RowCount - 1;
+                }
+                catch { }
+            }
+        }
+
+        private void Disconnect()
+        {
+            if (clientSocket != null)
+            {
+                try
+                {
+                    clientSocket.Close();
+                }
+                catch { }
+                clientSocket = null;
+            }
+
+            isConnected = false;
+            statusLabel.Text = "❌ Bağlı Değil";
+            statusLabel.ForeColor = Color.Red;
+            connectButton.Enabled = true;
+            disconnectButton.Enabled = false;
+            sendButton.Enabled = false;
+            usernameTextBox.Enabled = true;
+            serverTextBox.Enabled = true;
+            portNumericUpDown.Enabled = true;
+
+            AddSystemMessage($"{username} çıkış yaptı");
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Disconnect();
+            base.OnFormClosing(e);
+        }
+    }
+
+    // Chat Mesaj Modeli
+    public class ChatMessage
+    {
+        public string Gönderen { get; set; }
+        public string Mesaj { get; set; }
+        public string Zaman { get; set; }
+        public string Tip { get; set; }
+    }
+}

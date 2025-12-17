@@ -1,0 +1,245 @@
+﻿using DevExpress.XtraEditors;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace ChatSocketApp
+{
+    partial class XtraForm1
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        // Left column
+        private PanelControl leftPanel;
+        private GroupControl connectionGroup;
+        private LabelControl serverLabel;
+        private TextEdit serverTextEdit;
+        private LabelControl portLabel;
+        private SpinEdit portSpinEdit;
+        private LabelControl usernameLabel;
+        private TextEdit usernameTextEdit;
+        private SimpleButton connectButton;
+        private SimpleButton disconnectButton;
+        private SimpleButton serverStartButton;
+        private SimpleButton serverStopButton;
+        private LabelControl statusLabel;
+
+        private GroupControl usersGroup;
+        private ListBoxControl usersListControl;
+
+        // Right column
+        private PanelControl rightPanel;
+        private GroupControl chatGroup;
+        private ListBoxControl messageListControl;
+        private PanelControl bottomPanel;
+        private MemoEdit messageTextEdit;
+        private SimpleButton sendButton;
+        private SimpleButton clearButton;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+
+            // Form
+            this.SuspendLayout();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1000, 700);
+            this.Name = "XtraForm1";
+            this.Text = "Chat - DevExpress";
+
+            // Left panel
+            this.leftPanel = new DevExpress.XtraEditors.PanelControl();
+            this.leftPanel.Dock = DockStyle.Left;
+            this.leftPanel.Width = 280;
+            this.Controls.Add(this.leftPanel);
+
+            // Connection group
+            this.connectionGroup = new DevExpress.XtraEditors.GroupControl();
+            this.connectionGroup.Text = "Bağlantı";
+            this.connectionGroup.Dock = DockStyle.Top;
+            this.connectionGroup.Height = 240;
+            this.leftPanel.Controls.Add(this.connectionGroup);
+
+            // Server label & edit
+            this.serverLabel = new DevExpress.XtraEditors.LabelControl();
+            this.serverLabel.Text = "Server:";
+            this.serverLabel.Location = new Point(12, 28);
+            this.serverLabel.Width = 60;
+            this.connectionGroup.Controls.Add(this.serverLabel);
+
+            this.serverTextEdit = new DevExpress.XtraEditors.TextEdit();
+            this.serverTextEdit.Name = "serverTextEdit";
+            this.serverTextEdit.Text = "127.0.0.1";
+            this.serverTextEdit.Location = new Point(90, 25);
+            this.serverTextEdit.Width = 160;
+            this.connectionGroup.Controls.Add(this.serverTextEdit);
+
+            // Port
+            this.portLabel = new DevExpress.XtraEditors.LabelControl();
+            this.portLabel.Text = "Port:";
+            this.portLabel.Location = new Point(12, 64);
+            this.portLabel.Width = 60;
+            this.connectionGroup.Controls.Add(this.portLabel);
+
+            this.portSpinEdit = new DevExpress.XtraEditors.SpinEdit();
+            this.portSpinEdit.Name = "portSpinEdit";
+            this.portSpinEdit.Location = new Point(90, 60);
+            this.portSpinEdit.Width = 160;
+            this.portSpinEdit.Properties.IsFloatValue = false;
+            this.portSpinEdit.Properties.MinValue = 1;
+            this.portSpinEdit.Properties.MaxValue = 65535;
+            this.portSpinEdit.Value = 5000;
+            this.connectionGroup.Controls.Add(this.portSpinEdit);
+
+            // Username
+            this.usernameLabel = new DevExpress.XtraEditors.LabelControl();
+            this.usernameLabel.Text = "Kullanıcı Adı:";
+            this.usernameLabel.Location = new Point(12, 100);
+            this.usernameLabel.Width = 80;
+            this.connectionGroup.Controls.Add(this.usernameLabel);
+
+            this.usernameTextEdit = new DevExpress.XtraEditors.TextEdit();
+            this.usernameTextEdit.Name = "usernameTextEdit";
+            this.usernameTextEdit.Location = new Point(90, 96);
+            this.usernameTextEdit.Width = 160;
+            this.connectionGroup.Controls.Add(this.usernameTextEdit);
+
+            // Buttons
+            this.connectButton = new DevExpress.XtraEditors.SimpleButton();
+            this.connectButton.Name = "connectButton";
+            this.connectButton.Text = "Bağlan";
+            this.connectButton.Location = new Point(12, 138);
+            this.connectButton.Size = new Size(110, 30);
+            this.connectButton.Click += new EventHandler(this.ConnectButton_Click);
+            this.connectionGroup.Controls.Add(this.connectButton);
+
+            this.disconnectButton = new DevExpress.XtraEditors.SimpleButton();
+            this.disconnectButton.Name = "disconnectButton";
+            this.disconnectButton.Text = "Bağlantıyı Kes";
+            this.disconnectButton.Location = new Point(132, 138);
+            this.disconnectButton.Size = new Size(118, 30);
+            this.disconnectButton.Click += new EventHandler(this.DisconnectButton_Click);
+            this.disconnectButton.Enabled = false;
+            this.connectionGroup.Controls.Add(this.disconnectButton);
+
+            // Server start/stop buttons
+            this.serverStartButton = new DevExpress.XtraEditors.SimpleButton();
+            this.serverStartButton.Name = "serverStartButton";
+            this.serverStartButton.Text = "Sunucu Başlat";
+            this.serverStartButton.Location = new Point(12, 178);
+            this.serverStartButton.Size = new Size(110, 30);
+            this.serverStartButton.Click += new EventHandler(this.ServerStartButton_Click);
+            this.connectionGroup.Controls.Add(this.serverStartButton);
+
+            this.serverStopButton = new DevExpress.XtraEditors.SimpleButton();
+            this.serverStopButton.Name = "serverStopButton";
+            this.serverStopButton.Text = "Sunucu Durdur";
+            this.serverStopButton.Location = new Point(132, 178);
+            this.serverStopButton.Size = new Size(118, 30);
+            this.serverStopButton.Click += new EventHandler(this.ServerStopButton_Click);
+            this.serverStopButton.Enabled = false;
+            this.connectionGroup.Controls.Add(this.serverStopButton);
+
+            // Status label (moved down)
+            this.statusLabel = new DevExpress.XtraEditors.LabelControl();
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Text = "❌ Bağlı Değil";
+            this.statusLabel.Appearance.ForeColor = Color.Red;
+            this.statusLabel.Location = new Point(12, 218);
+            this.statusLabel.Width = 250;
+            this.connectionGroup.Controls.Add(this.statusLabel);
+
+            // Users group
+            this.usersGroup = new DevExpress.XtraEditors.GroupControl();
+            this.usersGroup.Text = "Kullanıcılar";
+            this.usersGroup.Dock = DockStyle.Fill;
+            this.leftPanel.Controls.Add(this.usersGroup);
+
+            this.usersListControl = new DevExpress.XtraEditors.ListBoxControl();
+            this.usersListControl.Name = "usersListControl";
+            this.usersListControl.Dock = DockStyle.Fill;
+            this.usersListControl.DoubleClick += new EventHandler(this.UsersListControl_DoubleClick);
+            this.usersGroup.Controls.Add(this.usersListControl);
+
+            // Right panel
+            this.rightPanel = new DevExpress.XtraEditors.PanelControl();
+            this.rightPanel.Dock = DockStyle.Fill;
+            this.Controls.Add(this.rightPanel);
+
+            // Chat group (messages)
+            this.chatGroup = new DevExpress.XtraEditors.GroupControl();
+            this.chatGroup.Text = "Sohbet";
+            this.chatGroup.Dock = DockStyle.Fill;
+            this.rightPanel.Controls.Add(this.chatGroup);
+
+            this.messageListControl = new DevExpress.XtraEditors.ListBoxControl();
+            this.messageListControl.Name = "messageListControl";
+            this.messageListControl.Dock = DockStyle.Fill;
+            this.messageListControl.HorizontalScrollbar = true;
+            this.messageListControl.SelectionMode = SelectionMode.None;
+            this.chatGroup.Controls.Add(this.messageListControl);
+
+            // Bottom panel inside rightPanel
+            this.bottomPanel = new DevExpress.XtraEditors.PanelControl();
+            this.bottomPanel.Dock = DockStyle.Bottom;
+            this.bottomPanel.Height = 110;
+            this.rightPanel.Controls.Add(this.bottomPanel);
+
+            // Message editor
+            this.messageTextEdit = new DevExpress.XtraEditors.MemoEdit();
+            this.messageTextEdit.Name = "messageTextEdit";
+            this.messageTextEdit.Location = new Point(12, 12);
+            this.messageTextEdit.Size = new Size(620, 86);
+            this.messageTextEdit.Properties.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.messageTextEdit.KeyDown += new KeyEventHandler(this.MessageTextEdit_KeyDown);
+            this.bottomPanel.Controls.Add(this.messageTextEdit);
+
+            // Send button
+            this.sendButton = new DevExpress.XtraEditors.SimpleButton();
+            this.sendButton.Name = "sendButton";
+            this.sendButton.Text = "Gönder";
+            this.sendButton.Location = new Point(650, 12);
+            this.sendButton.Size = new Size(120, 40);
+            this.sendButton.Click += new EventHandler(this.SendButton_Click);
+            this.sendButton.Enabled = false;
+            this.bottomPanel.Controls.Add(this.sendButton);
+
+            // Clear button
+            this.clearButton = new DevExpress.XtraEditors.SimpleButton();
+            this.clearButton.Name = "clearButton";
+            this.clearButton.Text = "Temizle";
+            this.clearButton.Location = new Point(650, 62);
+            this.clearButton.Size = new Size(120, 36);
+            this.clearButton.Click += new EventHandler(this.ClearButton_Click);
+            this.bottomPanel.Controls.Add(this.clearButton);
+
+            // Finalize
+            this.Load += new EventHandler(this.XtraForm1_Load);
+            this.ResumeLayout(false);
+        }
+
+        #endregion
+    }
+}

@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\smt1s\\source\\repos\\Floppy_Birds\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6DF48E3A-48E2-4525-84FC-CE7405ABDF7D}|Floppy_Birds\\Floppy_Birds.csproj|C:\\Users\\smt1s\\source\\repos\\Floppy_Birds\\floppy_birds\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{6DF48E3A-48E2-4525-84FC-CE7405ABDF7D}|Floppy_Birds\\Floppy_Birds.csproj|solutionrelative:floppy_birds\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6DF48E3A-48E2-4525-84FC-CE7405ABDF7D}|Floppy_Birds\\Floppy_Birds.csproj|c:\\users\\smt1s\\source\\repos\\floppy_birds\\floppy_birds\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6DF48E3A-48E2-4525-84FC-CE7405ABDF7D}|Floppy_Birds\\Floppy_Birds.csproj|solutionrelative:floppy_birds\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\smt1s\\source\\repos\\Floppy_Birds\\Floppy_Birds\\Form1.cs",
+              "RelativeDocumentMoniker": "Floppy_Birds\\Form1.cs",
+              "ToolTip": "C:\\Users\\smt1s\\source\\repos\\Floppy_Birds\\Floppy_Birds\\Form1.cs",
+              "RelativeToolTip": "Floppy_Birds\\Form1.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAkwEAAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-02T10:48:53.536Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.cs [Tasar\u0131m]",
+              "DocumentMoniker": "C:\\Users\\smt1s\\source\\repos\\Floppy_Birds\\Floppy_Birds\\Form1.cs",
+              "RelativeDocumentMoniker": "Floppy_Birds\\Form1.cs",
+              "ToolTip": "C:\\Users\\smt1s\\source\\repos\\Floppy_Birds\\Floppy_Birds\\Form1.cs [Tasar\u0131m]",
+              "RelativeToolTip": "Floppy_Birds\\Form1.cs [Tasar\u0131m]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-02T10:47:35.302Z",
+              "EditorCaption": " [Tasar\u0131m]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

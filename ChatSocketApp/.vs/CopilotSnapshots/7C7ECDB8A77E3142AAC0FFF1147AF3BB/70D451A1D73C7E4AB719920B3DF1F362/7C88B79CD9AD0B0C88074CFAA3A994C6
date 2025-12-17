@@ -1,0 +1,93 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace ChatSocketApp
+{
+    static class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
+        }
+    }
+
+    // Basit Socket Server Örneği (testing için). Konsol uygulaması gibi kullanılabilir.
+    public class ChatServer
+    {
+        private Socket serverSocket;
+        private List<Socket> clientSockets = new List<Socket>();
+
+        public void StartServer(int port)
+        {
+            serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            serverSocket.Bind(new IPEndPoint(IPAddress.Any, port));
+            serverSocket.Listen(10);
+
+            Console.WriteLine($"Chat sunucusu {port} portunda başladı...");
+
+            while (true)
+            {
+                Socket clientSocket = serverSocket.Accept();
+                clientSockets.Add(clientSocket);
+                Task.Run(() => HandleClient(clientSocket));
+            }
+        }
+
+        private void HandleClient(Socket socket)
+        {
+            byte[] buffer = new byte[4096];
+
+            try
+            {
+                while (true)
+                {
+                    int bytesRead = socket.Receive(buffer);
+
+                    if (bytesRead > 0)
+                    {
+                        string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                        BroadcastMessage(message, socket);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            catch
+            {
+                // ignored
+            }
+            finally
+            {
+                clientSockets.Remove(socket);
+                try { socket.Close(); } catch { }
+            }
+        }
+
+        private void BroadcastMessage(string message, Socket sender)
+        {
+            byte[] data = Encoding.UTF8.GetBytes(message);
+
+            foreach (var client in clientSockets.ToArray())
+            {
+                if (client != sender)
+                {
+                    try
+                    {
+                        client.Send(data);
+                    }
+                    catch { }
+                }
+            }
+        }
+    }
+}

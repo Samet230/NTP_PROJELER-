@@ -1,0 +1,291 @@
+﻿using DevExpress.XtraEditors;
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace ChatSocketApp
+{
+    public partial class XtraForm1 : XtraForm
+    {
+        private Socket clientSocket;
+        private string username;
+        private bool isConnected = false;
+        private BindingList<ChatMessage> messages = new BindingList<ChatMessage>();
+
+        public XtraForm1()
+        {
+            InitializeComponent();
+        }
+
+        private void XtraForm1_Load(object sender, EventArgs e)
+        {
+            // Nothing here for now
+        }
+
+        private void ConnectButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(usernameTextEdit.Text))
+            {
+                XtraMessageBox.Show("Lütfen kullanıcı adı girin!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            username = usernameTextEdit.Text.Trim();
+
+            try
+            {
+                clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                clientSocket.Connect(new IPEndPoint(IPAddress.Parse(serverTextEdit.Text.Trim()), Convert.ToInt32(portSpinEdit.Value)));
+                isConnected = true;
+
+                // Send connect message
+                string connectMsg = $"CONNECT:{username}";
+                clientSocket.Send(Encoding.UTF8.GetBytes(connectMsg));
+
+                statusLabel.Text = "✓ Bağlı";
+                statusLabel.Appearance.ForeColor = Color.Green;
+                connectButton.Enabled = false;
+                disconnectButton.Enabled = true;
+                sendButton.Enabled = true;
+                usernameTextEdit.Enabled = false;
+                serverTextEdit.Enabled = false;
+                portSpinEdit.Enabled = false;
+
+                // Add self to users list
+                try
+                {
+                    if (usersListControl != null && !usersListControl.Items.Contains(username))
+                        usersListControl.Items.Add(username);
+                }
+                catch { }
+
+                AddSystemMessage($"{username} sunucuya bağlandı");
+
+                Task.Run(() => ReceiveMessages());
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show($"Bağlantı hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isConnected = false;
+            }
+        }
+
+        private void DisconnectButton_Click(object sender, EventArgs e)
+        {
+            Disconnect();
+        }
+
+        private void SendButton_Click(object sender, EventArgs e)
+        {
+            if (!isConnected || string.IsNullOrWhiteSpace(messageTextEdit.Text))
+            {
+                XtraMessageBox.Show("Bağlı değilsiniz veya mesaj boş!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                string message = messageTextEdit.Text.Trim();
+                string fullMsg = $"{username}: {message}";
+                byte[] data = Encoding.UTF8.GetBytes(fullMsg);
+                clientSocket.Send(data);
+
+                AddMessage(username, message, "Benden");
+                messageTextEdit.Clear();
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show($"Mesaj gönderme hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void MessageTextEdit_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Enter to send, Shift+Enter for newline
+            if (e.KeyCode == Keys.Enter && !e.Shift)
+            {
+                e.SuppressKeyPress = true; // prevent newline
+                if (sendButton != null && sendButton.Enabled)
+                {
+                    SendButton_Click(sendButton, EventArgs.Empty);
+                }
+            }
+        }
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                messages.Clear();
+                if (messageListControl != null)
+                    messageListControl.Items.Clear();
+                AddSystemMessage("Mesajlar temizlendi");
+            }
+            catch { }
+        }
+
+        private void UsersListControl_DoubleClick(object sender, EventArgs e)
+        {
+            try
+            {
+                var lb = sender as ListBoxControl;
+                if (lb != null && lb.SelectedItem != null)
+                {
+                    string user = lb.SelectedItem.ToString();
+                    messageTextEdit.Focus();
+                    messageTextEdit.SelectionStart = messageTextEdit.Text.Length;
+                    messageTextEdit.SelectedText = "@" + user + " ";
+                }
+            }
+            catch { }
+        }
+
+        private void ReceiveMessages()
+        {
+            byte[] buffer = new byte[4096];
+
+            try
+            {
+                while (isConnected)
+                {
+                    int bytesRead = clientSocket.Receive(buffer);
+
+                    if (bytesRead > 0)
+                    {
+                        string receivedMsg = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+
+                        this.Invoke((Action)(() =>
+                        {
+                            if (receivedMsg.StartsWith("CONNECT:"))
+                            {
+                                string user = receivedMsg.Replace("CONNECT:", "");
+                                AddSystemMessage($"{user} sohbete katıldı");
+                            }
+                            else if (receivedMsg.Contains(":"))
+                            {
+                                string[] parts = receivedMsg.Split(new[] { ':' }, 2);
+                                if (parts.Length == 2)
+                                {
+                                    AddMessage(parts[0], parts[1].Trim(), "Diğerleri");
+                                }
+                            }
+                        }));
+                    }
+                    else
+                    {
+                        isConnected = false;
+                    }
+                }
+            }
+            catch
+            {
+                if (isConnected)
+                {
+                    this.Invoke((Action)(() =>
+                    {
+                        XtraMessageBox.Show("Sunucu bağlantısı kesildi!", "Bağlantı Hatası", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Disconnect();
+                    }));
+                }
+            }
+        }
+
+        private void AddMessage(string sender, string messageText, string type)
+        {
+            var msg = new ChatMessage
+            {
+                Gönderen = sender,
+                Mesaj = messageText,
+                Zaman = DateTime.Now.ToString("HH:mm:ss"),
+                Tip = type
+            };
+
+            messages.Add(msg);
+            if (messageListControl != null)
+            {
+                messageListControl.Items.Add($"{msg.Zaman} {msg.Gönderen}: {msg.Mesaj}");
+                try { messageListControl.SelectedIndex = messageListControl.Items.Count - 1; } catch { }
+            }
+        }
+
+        private void AddSystemMessage(string message)
+        {
+            var msg = new ChatMessage
+            {
+                Gönderen = "SİSTEM",
+                Mesaj = message,
+                Zaman = DateTime.Now.ToString("HH:mm:ss"),
+                Tip = "Sistem"
+            };
+
+            messages.Add(msg);
+            if (messageListControl != null)
+            {
+                messageListControl.Items.Add($"{msg.Zaman} {msg.Gönderen}: {msg.Mesaj}");
+                try { messageListControl.SelectedIndex = messageListControl.Items.Count - 1; } catch { }
+            }
+
+            // Update users list when someone joins / leaves
+            try
+            {
+                if (usersListControl != null && message.EndsWith("sohbete katıldı"))
+                {
+                    string user = message.Substring(0, message.IndexOf(" sohbete katıldı", StringComparison.Ordinal));
+                    if (!usersListControl.Items.Contains(user))
+                        usersListControl.Items.Add(user);
+                }
+                else if (usersListControl != null && message.EndsWith("çıkış yaptı"))
+                {
+                    string user = message.Substring(0, message.IndexOf(" çıkış yaptı", StringComparison.Ordinal));
+                    if (usersListControl.Items.Contains(user))
+                        usersListControl.Items.Remove(user);
+                }
+            }
+            catch { }
+        }
+
+        private void Disconnect()
+        {
+            if (clientSocket != null)
+            {
+                try { clientSocket.Close(); } catch { }
+                clientSocket = null;
+            }
+
+            isConnected = false;
+            if (statusLabel != null)
+            {
+                statusLabel.Text = "❌ Bağlı Değil";
+                statusLabel.Appearance.ForeColor = Color.Red;
+            }
+
+            if (connectButton != null) connectButton.Enabled = true;
+            if (disconnectButton != null) disconnectButton.Enabled = false;
+            if (sendButton != null) sendButton.Enabled = false;
+            if (usernameTextEdit != null) usernameTextEdit.Enabled = true;
+            if (serverTextEdit != null) serverTextEdit.Enabled = true;
+            if (portSpinEdit != null) portSpinEdit.Enabled = true;
+
+            // Remove self from users list
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(username) && usersListControl != null && usersListControl.Items.Contains(username))
+                    usersListControl.Items.Remove(username);
+            }
+            catch { }
+
+            AddSystemMessage($"{username} çıkış yaptı");
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Disconnect();
+            base.OnFormClosing(e);
+        }
+    }
+}

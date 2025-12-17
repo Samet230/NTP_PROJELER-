@@ -1,0 +1,3 @@
+﻿.NET Framework i├ğin MSBuild s├╝r├╝m 17.14.23+b0019275e
+
+  ChatSocketApp -> C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\bin\Debug\ChatSocketApp.exe

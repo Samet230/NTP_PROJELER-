@@ -1,0 +1,10 @@
+C:\Users\smt1s\source\repos\OOPNotepad\OOPNotepad\bin\Debug\OOPNotepad.exe.config
+C:\Users\smt1s\source\repos\OOPNotepad\OOPNotepad\bin\Debug\OOPNotepad.exe
+C:\Users\smt1s\source\repos\OOPNotepad\OOPNotepad\bin\Debug\OOPNotepad.pdb
+C:\Users\smt1s\source\repos\OOPNotepad\OOPNotepad\obj\Debug\OOPNotepad.csproj.AssemblyReference.cache
+C:\Users\smt1s\source\repos\OOPNotepad\OOPNotepad\obj\Debug\OOPNotepad.Properties.Resources.resources
+C:\Users\smt1s\source\repos\OOPNotepad\OOPNotepad\obj\Debug\OOPNotepad.csproj.GenerateResource.cache
+C:\Users\smt1s\source\repos\OOPNotepad\OOPNotepad\obj\Debug\OOPNotepad.csproj.CoreCompileInputs.cache
+C:\Users\smt1s\source\repos\OOPNotepad\OOPNotepad\obj\Debug\OOPNotepad.exe
+C:\Users\smt1s\source\repos\OOPNotepad\OOPNotepad\obj\Debug\OOPNotepad.pdb
+C:\Users\smt1s\source\repos\OOPNotepad\OOPNotepad\obj\Debug\OOPNotepad.exe.config

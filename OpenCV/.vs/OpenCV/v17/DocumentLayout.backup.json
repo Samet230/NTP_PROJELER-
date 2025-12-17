@@ -1,0 +1,132 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\smt1s\\source\\repos\\OpenCV\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0B2BC6DF-45FD-42AA-AD3D-E04A3EEF2735}|OpenCV\\OpenCV.csproj|c:\\users\\smt1s\\source\\repos\\opencv\\opencv\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B2BC6DF-45FD-42AA-AD3D-E04A3EEF2735}|OpenCV\\OpenCV.csproj|solutionrelative:opencv\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B2BC6DF-45FD-42AA-AD3D-E04A3EEF2735}|OpenCV\\OpenCV.csproj|c:\\users\\smt1s\\source\\repos\\opencv\\opencv\\xtraform1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0B2BC6DF-45FD-42AA-AD3D-E04A3EEF2735}|OpenCV\\OpenCV.csproj|solutionrelative:opencv\\xtraform1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B2BC6DF-45FD-42AA-AD3D-E04A3EEF2735}|OpenCV\\OpenCV.csproj|c:\\users\\smt1s\\source\\repos\\opencv\\opencv\\packages.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{0B2BC6DF-45FD-42AA-AD3D-E04A3EEF2735}|OpenCV\\OpenCV.csproj|solutionrelative:opencv\\packages.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B2BC6DF-45FD-42AA-AD3D-E04A3EEF2735}|OpenCV\\OpenCV.csproj|c:\\users\\smt1s\\source\\repos\\opencv\\opencv\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{0B2BC6DF-45FD-42AA-AD3D-E04A3EEF2735}|OpenCV\\OpenCV.csproj|solutionrelative:opencv\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|OpenCV||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B2BC6DF-45FD-42AA-AD3D-E04A3EEF2735}|OpenCV\\OpenCV.csproj|c:\\users\\smt1s\\source\\repos\\opencv\\opencv\\xtraform1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{0B2BC6DF-45FD-42AA-AD3D-E04A3EEF2735}|OpenCV\\OpenCV.csproj|solutionrelative:opencv\\xtraform1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0B2BC6DF-45FD-42AA-AD3D-E04A3EEF2735}|OpenCV\\OpenCV.csproj|c:\\users\\smt1s\\source\\repos\\opencv\\opencv\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|5e9a8ac2-4f34-4521-858f-4c248ba31532"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "XtraForm1.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\smt1s\\source\\repos\\OpenCV\\OpenCV\\XtraForm1.Designer.cs",
+              "RelativeDocumentMoniker": "OpenCV\\XtraForm1.Designer.cs",
+              "ToolTip": "C:\\Users\\smt1s\\source\\repos\\OpenCV\\OpenCV\\XtraForm1.Designer.cs",
+              "RelativeToolTip": "OpenCV\\XtraForm1.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-31T12:46:12.585Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "XtraForm1.cs [Tasar\u0131m]",
+              "DocumentMoniker": "C:\\Users\\smt1s\\source\\repos\\OpenCV\\OpenCV\\XtraForm1.cs",
+              "RelativeDocumentMoniker": "OpenCV\\XtraForm1.cs",
+              "ToolTip": "C:\\Users\\smt1s\\source\\repos\\OpenCV\\OpenCV\\XtraForm1.cs [Tasar\u0131m]",
+              "RelativeToolTip": "OpenCV\\XtraForm1.cs [Tasar\u0131m]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-31T12:38:15.321Z",
+              "EditorCaption": " [Tasar\u0131m]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "OpenCV",
+              "DocumentMoniker": "C:\\Users\\smt1s\\source\\repos\\OpenCV\\OpenCV\\OpenCV.csproj",
+              "RelativeDocumentMoniker": "OpenCV\\OpenCV.csproj",
+              "ToolTip": "C:\\Users\\smt1s\\source\\repos\\OpenCV\\OpenCV\\OpenCV.csproj*",
+              "RelativeToolTip": "OpenCV\\OpenCV.csproj*",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-10-31T12:25:17.705Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "App.config",
+              "DocumentMoniker": "C:\\Users\\smt1s\\source\\repos\\OpenCV\\OpenCV\\App.config",
+              "RelativeDocumentMoniker": "OpenCV\\App.config",
+              "ToolTip": "C:\\Users\\smt1s\\source\\repos\\OpenCV\\OpenCV\\App.config",
+              "RelativeToolTip": "OpenCV\\App.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-10-31T12:25:16.17Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "packages.config",
+              "DocumentMoniker": "C:\\Users\\smt1s\\source\\repos\\OpenCV\\OpenCV\\packages.config",
+              "RelativeDocumentMoniker": "OpenCV\\packages.config",
+              "ToolTip": "C:\\Users\\smt1s\\source\\repos\\OpenCV\\OpenCV\\packages.config",
+              "RelativeToolTip": "OpenCV\\packages.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-10-31T12:23:31.468Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\smt1s\\source\\repos\\OpenCV\\OpenCV\\Program.cs",
+              "RelativeDocumentMoniker": "OpenCV\\Program.cs",
+              "ToolTip": "C:\\Users\\smt1s\\source\\repos\\OpenCV\\OpenCV\\Program.cs",
+              "RelativeToolTip": "OpenCV\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-31T12:22:52.238Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

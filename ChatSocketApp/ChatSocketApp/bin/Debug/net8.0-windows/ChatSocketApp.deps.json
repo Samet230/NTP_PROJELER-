@@ -1,0 +1,778 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "ChatSocketApp/1.0.0": {
+        "dependencies": {
+          "DevExpress.Win": "25.1.3"
+        },
+        "runtime": {
+          "ChatSocketApp.dll": {}
+        }
+      },
+      "DevExpress.Data/25.1.3": {
+        "dependencies": {
+          "System.Drawing.Common": "8.0.15"
+        },
+        "runtime": {
+          "lib/net8.0/DevExpress.Data.v25.1.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.Data.Desktop/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "System.Data.OleDb": "8.0.1"
+        },
+        "runtime": {
+          "lib/net8.0-windows/DevExpress.Data.Desktop.v25.1.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.Drawing/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "System.Drawing.Common": "8.0.15"
+        },
+        "runtime": {
+          "lib/net8.0/DevExpress.Drawing.v25.1.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.Office.Core/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "DevExpress.Pdf.Core": "25.1.3",
+          "DevExpress.Printing.Core": "25.1.3",
+          "System.Drawing.Common": "8.0.15"
+        },
+        "runtime": {
+          "lib/net8.0/DevExpress.Office.v25.1.Core.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.Pdf.Core/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "System.Drawing.Common": "8.0.15",
+          "System.Security.Cryptography.Pkcs": "8.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/DevExpress.Pdf.v25.1.Core.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.Pdf.Drawing/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "DevExpress.Pdf.Core": "25.1.3",
+          "System.Drawing.Common": "8.0.15"
+        },
+        "runtime": {
+          "lib/net8.0/DevExpress.Pdf.v25.1.Drawing.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.PivotGrid.Core/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "DevExpress.Printing.Core": "25.1.3",
+          "System.Data.OleDb": "8.0.1",
+          "System.Drawing.Common": "8.0.15"
+        },
+        "runtime": {
+          "lib/net8.0/DevExpress.PivotGrid.v25.1.Core.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.Printing.Core/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "DevExpress.Pdf.Core": "25.1.3",
+          "DevExpress.Pdf.Drawing": "25.1.3",
+          "System.Drawing.Common": "8.0.15",
+          "System.ServiceModel.Http": "8.1.2"
+        },
+        "runtime": {
+          "lib/net8.0/DevExpress.Printing.v25.1.Core.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.RichEdit.Core/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "DevExpress.Office.Core": "25.1.3",
+          "DevExpress.Pdf.Core": "25.1.3",
+          "DevExpress.Printing.Core": "25.1.3",
+          "System.Drawing.Common": "8.0.15"
+        },
+        "runtime": {
+          "lib/net8.0/DevExpress.RichEdit.v25.1.Core.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.RichEdit.Export/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "DevExpress.Office.Core": "25.1.3",
+          "DevExpress.Printing.Core": "25.1.3",
+          "DevExpress.RichEdit.Core": "25.1.3",
+          "System.Drawing.Common": "8.0.15"
+        },
+        "runtime": {
+          "lib/net8.0/DevExpress.RichEdit.v25.1.Export.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.Sparkline.Core/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "System.Drawing.Common": "8.0.15"
+        },
+        "runtime": {
+          "lib/net8.0/DevExpress.Sparkline.v25.1.Core.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.Utils/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Data.Desktop": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "DevExpress.Printing.Core": "25.1.3"
+        },
+        "runtime": {
+          "lib/net8.0-windows/DevExpress.Utils.v25.1.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.Win/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Data.Desktop": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "DevExpress.RichEdit.Export": "25.1.3",
+          "DevExpress.Utils": "25.1.3",
+          "DevExpress.Win.Grid": "25.1.3",
+          "DevExpress.Win.Navigation": "25.1.3",
+          "DevExpress.Win.PivotGrid": "25.1.3",
+          "DevExpress.Win.Printing": "25.1.3",
+          "DevExpress.Win.TreeList": "25.1.3",
+          "DevExpress.Win.VerticalGrid": "25.1.3"
+        },
+        "runtime": {
+          "lib/net8.0-windows/DevExpress.XtraNavBar.v25.1.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          },
+          "lib/net8.0-windows/DevExpress.XtraWizard.v25.1.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.Win.Grid/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Data.Desktop": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "DevExpress.Printing.Core": "25.1.3",
+          "DevExpress.Utils": "25.1.3",
+          "DevExpress.Win.Navigation": "25.1.3",
+          "DevExpress.Win.Printing": "25.1.3"
+        },
+        "runtime": {
+          "lib/net8.0-windows/DevExpress.XtraGrid.v25.1.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.Win.Navigation/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Data.Desktop": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "DevExpress.Printing.Core": "25.1.3",
+          "DevExpress.Sparkline.Core": "25.1.3",
+          "DevExpress.Utils": "25.1.3"
+        },
+        "runtime": {
+          "lib/net8.0-windows/DevExpress.XtraBars.v25.1.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          },
+          "lib/net8.0-windows/DevExpress.XtraEditors.v25.1.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          },
+          "lib/net8.0-windows/DevExpress.XtraLayout.v25.1.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.Win.PivotGrid/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Data.Desktop": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "DevExpress.PivotGrid.Core": "25.1.3",
+          "DevExpress.Printing.Core": "25.1.3",
+          "DevExpress.Utils": "25.1.3",
+          "DevExpress.Win.Navigation": "25.1.3"
+        },
+        "runtime": {
+          "lib/net8.0-windows/DevExpress.XtraPivotGrid.v25.1.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.Win.Printing/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Data.Desktop": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "DevExpress.Printing.Core": "25.1.3",
+          "DevExpress.RichEdit.Core": "25.1.3",
+          "DevExpress.Utils": "25.1.3",
+          "DevExpress.Win.Navigation": "25.1.3",
+          "DevExpress.Win.TreeList": "25.1.3"
+        },
+        "runtime": {
+          "lib/net8.0-windows/DevExpress.XtraPrinting.v25.1.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.Win.TreeList/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Data.Desktop": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "DevExpress.Printing.Core": "25.1.3",
+          "DevExpress.Utils": "25.1.3",
+          "DevExpress.Win.Navigation": "25.1.3"
+        },
+        "runtime": {
+          "lib/net8.0-windows/DevExpress.XtraTreeList.v25.1.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "DevExpress.Win.VerticalGrid/25.1.3": {
+        "dependencies": {
+          "DevExpress.Data": "25.1.3",
+          "DevExpress.Data.Desktop": "25.1.3",
+          "DevExpress.Drawing": "25.1.3",
+          "DevExpress.Printing.Core": "25.1.3",
+          "DevExpress.Utils": "25.1.3",
+          "DevExpress.Win.Navigation": "25.1.3",
+          "DevExpress.Win.Printing": "25.1.3"
+        },
+        "runtime": {
+          "lib/net8.0-windows/DevExpress.XtraVerticalGrid.v25.1.dll": {
+            "assemblyVersion": "25.1.3.0",
+            "fileVersion": "25.1.3.0"
+          }
+        }
+      },
+      "Microsoft.Extensions.ObjectPool/8.0.10": {
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.ObjectPool.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46804"
+          }
+        }
+      },
+      "Microsoft.Win32.SystemEvents/8.0.0": {},
+      "System.Configuration.ConfigurationManager/8.0.1": {
+        "dependencies": {
+          "System.Diagnostics.EventLog": "8.0.1",
+          "System.Security.Cryptography.ProtectedData": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/System.Configuration.ConfigurationManager.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        }
+      },
+      "System.Data.OleDb/8.0.1": {
+        "dependencies": {
+          "System.Configuration.ConfigurationManager": "8.0.1",
+          "System.Diagnostics.PerformanceCounter": "8.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/System.Data.OleDb.dll": {
+            "assemblyVersion": "8.0.0.1",
+            "fileVersion": "8.0.1024.46610"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/System.Data.OleDb.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "8.0.0.1",
+            "fileVersion": "8.0.1024.46610"
+          }
+        }
+      },
+      "System.Diagnostics.EventLog/8.0.1": {
+        "runtime": {
+          "lib/net8.0/System.Diagnostics.EventLog.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        }
+      },
+      "System.Diagnostics.PerformanceCounter/8.0.1": {
+        "dependencies": {
+          "System.Configuration.ConfigurationManager": "8.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/System.Diagnostics.PerformanceCounter.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/System.Diagnostics.PerformanceCounter.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        }
+      },
+      "System.Drawing.Common/8.0.15": {
+        "dependencies": {
+          "Microsoft.Win32.SystemEvents": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/System.Drawing.Common.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1525.16501"
+          }
+        }
+      },
+      "System.Security.Cryptography.Pkcs/8.0.1": {
+        "runtime": {
+          "lib/net8.0/System.Security.Cryptography.Pkcs.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        }
+      },
+      "System.Security.Cryptography.ProtectedData/8.0.0": {},
+      "System.Security.Cryptography.Xml/8.0.2": {
+        "dependencies": {
+          "System.Security.Cryptography.Pkcs": "8.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/System.Security.Cryptography.Xml.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.1024.46610"
+          }
+        }
+      },
+      "System.ServiceModel.Http/8.1.2": {
+        "dependencies": {
+          "System.ServiceModel.Primitives": "8.1.2"
+        },
+        "runtime": {
+          "lib/net8.0/System.ServiceModel.Http.dll": {
+            "assemblyVersion": "8.1.2.0",
+            "fileVersion": "8.100.225.15402"
+          }
+        },
+        "resources": {
+          "lib/net8.0/cs/System.ServiceModel.Http.resources.dll": {
+            "locale": "cs"
+          },
+          "lib/net8.0/de/System.ServiceModel.Http.resources.dll": {
+            "locale": "de"
+          },
+          "lib/net8.0/es/System.ServiceModel.Http.resources.dll": {
+            "locale": "es"
+          },
+          "lib/net8.0/fr/System.ServiceModel.Http.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/net8.0/it/System.ServiceModel.Http.resources.dll": {
+            "locale": "it"
+          },
+          "lib/net8.0/ja/System.ServiceModel.Http.resources.dll": {
+            "locale": "ja"
+          },
+          "lib/net8.0/ko/System.ServiceModel.Http.resources.dll": {
+            "locale": "ko"
+          },
+          "lib/net8.0/pl/System.ServiceModel.Http.resources.dll": {
+            "locale": "pl"
+          },
+          "lib/net8.0/pt-BR/System.ServiceModel.Http.resources.dll": {
+            "locale": "pt-BR"
+          },
+          "lib/net8.0/ru/System.ServiceModel.Http.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/net8.0/tr/System.ServiceModel.Http.resources.dll": {
+            "locale": "tr"
+          },
+          "lib/net8.0/zh-Hans/System.ServiceModel.Http.resources.dll": {
+            "locale": "zh-Hans"
+          },
+          "lib/net8.0/zh-Hant/System.ServiceModel.Http.resources.dll": {
+            "locale": "zh-Hant"
+          }
+        }
+      },
+      "System.ServiceModel.Primitives/8.1.2": {
+        "dependencies": {
+          "Microsoft.Extensions.ObjectPool": "8.0.10",
+          "System.Security.Cryptography.Xml": "8.0.2"
+        },
+        "runtime": {
+          "lib/net8.0/System.ServiceModel.Duplex.dll": {
+            "assemblyVersion": "8.1.2.0",
+            "fileVersion": "8.100.225.15402"
+          },
+          "lib/net8.0/System.ServiceModel.Primitives.dll": {
+            "assemblyVersion": "8.1.2.0",
+            "fileVersion": "8.100.225.15402"
+          },
+          "lib/net8.0/System.ServiceModel.Security.dll": {
+            "assemblyVersion": "8.1.2.0",
+            "fileVersion": "8.100.225.15402"
+          },
+          "lib/net8.0/System.ServiceModel.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "8.100.225.15402"
+          }
+        },
+        "resources": {
+          "lib/net8.0/cs/System.ServiceModel.Primitives.resources.dll": {
+            "locale": "cs"
+          },
+          "lib/net8.0/de/System.ServiceModel.Primitives.resources.dll": {
+            "locale": "de"
+          },
+          "lib/net8.0/es/System.ServiceModel.Primitives.resources.dll": {
+            "locale": "es"
+          },
+          "lib/net8.0/fr/System.ServiceModel.Primitives.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/net8.0/it/System.ServiceModel.Primitives.resources.dll": {
+            "locale": "it"
+          },
+          "lib/net8.0/ja/System.ServiceModel.Primitives.resources.dll": {
+            "locale": "ja"
+          },
+          "lib/net8.0/ko/System.ServiceModel.Primitives.resources.dll": {
+            "locale": "ko"
+          },
+          "lib/net8.0/pl/System.ServiceModel.Primitives.resources.dll": {
+            "locale": "pl"
+          },
+          "lib/net8.0/pt-BR/System.ServiceModel.Primitives.resources.dll": {
+            "locale": "pt-BR"
+          },
+          "lib/net8.0/ru/System.ServiceModel.Primitives.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/net8.0/tr/System.ServiceModel.Primitives.resources.dll": {
+            "locale": "tr"
+          },
+          "lib/net8.0/zh-Hans/System.ServiceModel.Primitives.resources.dll": {
+            "locale": "zh-Hans"
+          },
+          "lib/net8.0/zh-Hant/System.ServiceModel.Primitives.resources.dll": {
+            "locale": "zh-Hant"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ChatSocketApp/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "DevExpress.Data/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zqXiuRty9D64USkIFKFQek+wF3Ie70xmLrabt2VDG8kDx1788x3lU8XadWnoTviSAVdt83AcyAZGc77eQAf1eg==",
+      "path": "devexpress.data/25.1.3",
+      "hashPath": "devexpress.data.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.Data.Desktop/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cKsXvvr3FuvwEZZVpDeAdtpSaHOpdYf80yWth0JyiMEX6v+tq1nDIn2KJ4CfJjwDvSAbVXlMi2vrvA92r2Jy6Q==",
+      "path": "devexpress.data.desktop/25.1.3",
+      "hashPath": "devexpress.data.desktop.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.Drawing/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-r9HLuVHH+w0OvwZiLDAtdV2d7yTe9kqU1RGBq0L62/lZ3CTGKqHe3YOXwpzVAhhbynU2JrzbbwFzU3k7vkPpWA==",
+      "path": "devexpress.drawing/25.1.3",
+      "hashPath": "devexpress.drawing.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.Office.Core/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VJlyx3C6QQ/7NLviIzdSykN/te9H9ci+JJWSAX7LfvWTNap16eGOzjSS8M0Jtb7FkenyHw6VpwoL9tqTUBFrcw==",
+      "path": "devexpress.office.core/25.1.3",
+      "hashPath": "devexpress.office.core.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.Pdf.Core/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-g0ZV84uzyXLM0WmO+dpGNSF6CgW39oBOUn+snBAvhY8IUsOiF/6ixY1CFZXFO02fqz6LxiT1WVBH+GM7Ly1EAw==",
+      "path": "devexpress.pdf.core/25.1.3",
+      "hashPath": "devexpress.pdf.core.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.Pdf.Drawing/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uLUUPTp5mpDDWNC/uWXKFtx4ncRIxp4yR/6FujsBPocVQkLOqmhw1DlmEc6T3p005UouQqg5FY/Vxsssmohyyg==",
+      "path": "devexpress.pdf.drawing/25.1.3",
+      "hashPath": "devexpress.pdf.drawing.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.PivotGrid.Core/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Y+8hLpODt6+HiiKY6PKaUYwKo2YnA61zs4UjneSys9bIOM+7PRr58HlcoLmz/SJgXwgClXBbPHT2Wl3msaEJ4Q==",
+      "path": "devexpress.pivotgrid.core/25.1.3",
+      "hashPath": "devexpress.pivotgrid.core.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.Printing.Core/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-I2aXPYz+v2vZvZr0rMOWzG+CWkMJp9fAEAkXtiUxSqtdTZ73Q/g4Stxj+ra2vhZGMF4yxjlCT5ejQzzsoJMw6g==",
+      "path": "devexpress.printing.core/25.1.3",
+      "hashPath": "devexpress.printing.core.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.RichEdit.Core/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TTiCFfMMa+i4ouaE5IOUNScYIbZPj34yKUY1kuofCChgD1wYSD1kyyBvowONslf0iK5vwKkcT0TyRrAhVTSIGQ==",
+      "path": "devexpress.richedit.core/25.1.3",
+      "hashPath": "devexpress.richedit.core.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.RichEdit.Export/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GjfoFEK5nhbkuZ3XU94QrcsiuOwYGVYsRjfpTu9nGU5Ailpjg0cSDV4CMXlsGDd6H9Rhfzz2tValrnipXPETVg==",
+      "path": "devexpress.richedit.export/25.1.3",
+      "hashPath": "devexpress.richedit.export.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.Sparkline.Core/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XclXEX4UssJRE+Q7GTw4Fjo37n7W2LHbhHqcXC4zPjY7hB1U8gn9e9Z30J6SCVnyn8JHc8RQil2i8nWJQrw98Q==",
+      "path": "devexpress.sparkline.core/25.1.3",
+      "hashPath": "devexpress.sparkline.core.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.Utils/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CR4gZ7d2wbE5ra4qT7ar/SaDoFWAC+pZDa5kBHXIzecEw5Hq3wluQhACmWXhGKJmWcCLp80qMRdpW6q0i0/1Vw==",
+      "path": "devexpress.utils/25.1.3",
+      "hashPath": "devexpress.utils.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.Win/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-oyJLY38fiwubHDCjxeJEe3SsguFVz5deZZdjJhcobRR7owaFajGheEd69ER+vqO26hxbCkC7b0jnAWU8yAPxMw==",
+      "path": "devexpress.win/25.1.3",
+      "hashPath": "devexpress.win.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.Win.Grid/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GFExoYXCLvBfPirHU96yKqZg7vWAk2guaohSto8VTNBgxKpSl5tGtue0L9LhJc/DsFed7ZK2GPQmqeJ4ch2ktQ==",
+      "path": "devexpress.win.grid/25.1.3",
+      "hashPath": "devexpress.win.grid.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.Win.Navigation/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CbMqmarleO7fqfc9k/SiVpua2HrMkuTsTe2cE8lCr5UQmyBzPwGlLnlcQE/btJh2cht8e9xRzy9S46UV2OQ5zQ==",
+      "path": "devexpress.win.navigation/25.1.3",
+      "hashPath": "devexpress.win.navigation.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.Win.PivotGrid/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-861XPEIYKEcR9WYVcNQS6cDW+m1HX58n7QWjF4RAzOgzgGRtOiGa5rGwwIAcQ0ludNgxA6aLjqB9Nk391IRRaQ==",
+      "path": "devexpress.win.pivotgrid/25.1.3",
+      "hashPath": "devexpress.win.pivotgrid.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.Win.Printing/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-M0KxYuupoyeFQ/x105yXTUIXkp9qPoKl1q/3g2V2UeLkyqEufoOtYEL+nVg08S62JKYfjJfaT2EsMXgc1gP4Pg==",
+      "path": "devexpress.win.printing/25.1.3",
+      "hashPath": "devexpress.win.printing.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.Win.TreeList/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-SK2cwxV8vGOjqDr1VgmHMfMf2KM7S5psU6G/OJL70I5LZRn4q66aWZ2ryPe1lygHqDOUMC3PuOp5C75mFZRy9g==",
+      "path": "devexpress.win.treelist/25.1.3",
+      "hashPath": "devexpress.win.treelist.25.1.3.nupkg.sha512"
+    },
+    "DevExpress.Win.VerticalGrid/25.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MoXduZx8aj7e4vGMzkQ3x9uutC1UDMrYjqyxqiqmrGS2mu3a21WVwLN55rSz2PkppCwETScGOQzLxRoSfIkWgA==",
+      "path": "devexpress.win.verticalgrid/25.1.3",
+      "hashPath": "devexpress.win.verticalgrid.25.1.3.nupkg.sha512"
+    },
+    "Microsoft.Extensions.ObjectPool/8.0.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-u7gAG7JgxF8VSJUGPSudAcPxOt+ymJKQCSxNRxiuKV+klCQbHljQR75SilpedCTfhPWDhtUwIJpnDVtspr9nMg==",
+      "path": "microsoft.extensions.objectpool/8.0.10",
+      "hashPath": "microsoft.extensions.objectpool.8.0.10.nupkg.sha512"
+    },
+    "Microsoft.Win32.SystemEvents/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9opKRyOKMCi2xJ7Bj7kxtZ1r9vbzosMvRrdEhVhDz8j8MoBGgB+WmC94yH839NPH+BclAjtQ/pyagvi/8gDLkw==",
+      "path": "microsoft.win32.systemevents/8.0.0",
+      "hashPath": "microsoft.win32.systemevents.8.0.0.nupkg.sha512"
+    },
+    "System.Configuration.ConfigurationManager/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gPYFPDyohW2gXNhdQRSjtmeS6FymL2crg4Sral1wtvEJ7DUqFCDWDVbbLobASbzxfic8U1hQEdC7hmg9LHncMw==",
+      "path": "system.configuration.configurationmanager/8.0.1",
+      "hashPath": "system.configuration.configurationmanager.8.0.1.nupkg.sha512"
+    },
+    "System.Data.OleDb/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RO+/y2ggU5956uQDRXdjA1e2l5yJ4rTWNX76eZ+3sgtYGqGapCe2kQCyiUci+/y6Fyb21Irp4RQEdfrIiuYrxQ==",
+      "path": "system.data.oledb/8.0.1",
+      "hashPath": "system.data.oledb.8.0.1.nupkg.sha512"
+    },
+    "System.Diagnostics.EventLog/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-n1ZP7NM2Gkn/MgD8+eOT5MulMj6wfeQMNS2Pizvq5GHCZfjlFMXV2irQlQmJhwA2VABC57M0auudO89Iu2uRLg==",
+      "path": "system.diagnostics.eventlog/8.0.1",
+      "hashPath": "system.diagnostics.eventlog.8.0.1.nupkg.sha512"
+    },
+    "System.Diagnostics.PerformanceCounter/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9RfEDiEjlUADeThs8IPdDVTXSnPRSqjfgTQJALpmGFPKC0k2mbdufOXnb/9JZ4I0TkmxOfy3VTJxrHOJSs8cXg==",
+      "path": "system.diagnostics.performancecounter/8.0.1",
+      "hashPath": "system.diagnostics.performancecounter.8.0.1.nupkg.sha512"
+    },
+    "System.Drawing.Common/8.0.15": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qe9ADU4LlSDEluFw6UCvnhUX43iu1rfIi4u3cpQ37DjFDbwyWGRrDM5gypYj1IQuAVRnMHqOyFbCjtCvijN2cA==",
+      "path": "system.drawing.common/8.0.15",
+      "hashPath": "system.drawing.common.8.0.15.nupkg.sha512"
+    },
+    "System.Security.Cryptography.Pkcs/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CoCRHFym33aUSf/NtWSVSZa99dkd0Hm7OCZUxORBjRB16LNhIEOf8THPqzIYlvKM0nNDAPTRBa1FxEECrgaxxA==",
+      "path": "system.security.cryptography.pkcs/8.0.1",
+      "hashPath": "system.security.cryptography.pkcs.8.0.1.nupkg.sha512"
+    },
+    "System.Security.Cryptography.ProtectedData/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+TUFINV2q2ifyXauQXRwy4CiBhqvDEDZeVJU7qfxya4aRYOKzVBpN+4acx25VcPB9ywUN6C0n8drWl110PhZEg==",
+      "path": "system.security.cryptography.protecteddata/8.0.0",
+      "hashPath": "system.security.cryptography.protecteddata.8.0.0.nupkg.sha512"
+    },
+    "System.Security.Cryptography.Xml/8.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-aDM/wm0ZGEZ6ZYJLzgqjp2FZdHbDHh6/OmpGfb7AdZ105zYmPn/83JRU2xLIbwgoNz9U1SLUTJN0v5th3qmvjA==",
+      "path": "system.security.cryptography.xml/8.0.2",
+      "hashPath": "system.security.cryptography.xml.8.0.2.nupkg.sha512"
+    },
+    "System.ServiceModel.Http/8.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2HoneRUCHB8kKQcuAladR16mIHuyi5f9DrrNnTjkaICv5X7YuwoI7GSrp9GTkRSxC4ddNcjMdwE01Rm0sPgoMw==",
+      "path": "system.servicemodel.http/8.1.2",
+      "hashPath": "system.servicemodel.http.8.1.2.nupkg.sha512"
+    },
+    "System.ServiceModel.Primitives/8.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xlJ07FAUSDjPL/GhvVY1/KVPWn2ce056X4nHPwqAa5rkNLiNN5rqh6VcgMUoF6J7ckwhkVJ1vVx/K/47nyyR9g==",
+      "path": "system.servicemodel.primitives/8.1.2",
+      "hashPath": "system.servicemodel.primitives.8.1.2.nupkg.sha512"
+    }
+  }
+}

@@ -1,0 +1,184 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace ChatSocketApp
+{
+    static class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            // Run UI only. Server will be started/stopped from the UI (Sunucu Başlat / Sunucu Durdur).
+            Application.Run(new XtraForm1());
+        }
+    }
+
+    // Basit Socket Server Örneği (testing için). CancellationToken ile durdurma desteği eklendi.
+    public class ChatServer
+    {
+        private Socket serverSocket;
+        private List<Socket> clientSockets = new List<Socket>();
+
+        public void StartServer(int port, CancellationToken token)
+        {
+            serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            serverSocket.Bind(new IPEndPoint(IPAddress.Any, port));
+            serverSocket.Listen(100);
+
+            try
+            {
+                while (!token.IsCancellationRequested)
+                {
+                    // Wait up to 100ms for a pending connection
+                    if (serverSocket.Poll(100000, SelectMode.SelectRead))
+                    {
+                        try
+                        {
+                            Socket clientSocket = serverSocket.Accept();
+                            lock (clientSockets)
+                            {
+                                clientSockets.Add(clientSocket);
+                            }
+                            Task.Run(() => HandleClient(clientSocket, token));
+                        }
+                        catch (SocketException)
+                        {
+                            // accept error, continue
+                        }
+                    }
+                    else
+                    {
+                        // no pending connections, loop
+                    }
+                }
+            }
+            finally
+            {
+                // Close all client sockets
+                lock (clientSockets)
+                {
+                    foreach (var s in clientSockets)
+                    {
+                        try { s.Shutdown(SocketShutdown.Both); } catch { }
+                        try { s.Close(); } catch { }
+                    }
+                    clientSockets.Clear();
+                }
+
+                try { serverSocket.Close(); } catch { }
+            }
+        }
+
+        private void HandleClient(Socket socket, CancellationToken token)
+        {
+            byte[] buffer = new byte[4096];
+            string clientName = null;
+
+            try
+            {
+                while (!token.IsCancellationRequested)
+                {
+                    if (socket.Poll(100000, SelectMode.SelectRead))
+                    {
+                        int bytesRead = 0;
+                        try
+                        {
+                            bytesRead = socket.Receive(buffer);
+                        }
+                        catch
+                        {
+                            break; // client error
+                        }
+
+                        if (bytesRead > 0)
+                        {
+                            string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+
+                            // Track client name when it sends CONNECT:<name>
+                            if (message.StartsWith("CONNECT:"))
+                            {
+                                try
+                                {
+                                    clientName = message.Substring("CONNECT:".Length).Trim();
+                                }
+                                catch { clientName = null; }
+                            }
+
+                            BroadcastMessage(message, socket);
+                        }
+                        else
+                        {
+                            break; // client closed
+                        }
+                    }
+                    else
+                    {
+                        // no data, continue
+                    }
+                }
+            }
+            finally
+            {
+                lock (clientSockets)
+                {
+                    if (clientSockets.Contains(socket))
+                        clientSockets.Remove(socket);
+                }
+                try { socket.Close(); } catch { }
+
+                // Inform others that this client left
+                try
+                {
+                    if (!string.IsNullOrEmpty(clientName))
+                    {
+                        BroadcastMessage($"{clientName}: çıkış yaptı", null);
+                    }
+                }
+                catch { }
+            }
+        }
+
+        private void BroadcastMessage(string message, Socket sender)
+        {
+            byte[] data = Encoding.UTF8.GetBytes(message);
+
+            Socket[] clientsCopy;
+            lock (clientSockets)
+            {
+                clientsCopy = clientSockets.ToArray();
+            }
+
+            foreach (var client in clientsCopy)
+            {
+                // Skip sending back to the original sender to avoid duplicate display
+                if (sender != null && client == sender)
+                    continue;
+
+                try
+                {
+                    client.Send(data);
+                }
+                catch
+                {
+                    // if send fails, remove the client
+                    try { client.Shutdown(SocketShutdown.Both); } catch { }
+                    try { client.Close(); } catch { }
+                    lock (clientSockets)
+                    {
+                        if (clientSockets.Contains(client))
+                            clientSockets.Remove(client);
+                    }
+                }
+            }
+        }
+    }
+}

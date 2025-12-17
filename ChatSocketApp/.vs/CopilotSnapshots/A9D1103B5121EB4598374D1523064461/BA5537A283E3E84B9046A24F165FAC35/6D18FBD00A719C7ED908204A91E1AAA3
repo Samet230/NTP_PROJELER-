@@ -1,0 +1,464 @@
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace ChatSocketApp
+{
+    public partial class Form1 : Form
+    {
+        private Socket clientSocket;
+        private string username;
+        private bool isConnected = false;
+        private BindingList<ChatMessage> messages = new BindingList<ChatMessage>();
+
+        // UI Kontrolleri (WinForms)
+        private Panel topPanel;
+        private Label serverLabel;
+        private TextBox serverTextBox;
+        private Label portLabel;
+        private NumericUpDown portNumericUpDown;
+        private Label usernameLabel;
+        private TextBox usernameTextBox;
+        private Button connectButton;
+        private Button disconnectButton;
+        private Label statusLabel;
+
+        // message display as ListBox (simpler, clearer)
+        private ListBox messageListBox;
+        private ListBox usersListBox;
+
+        private Panel bottomPanel;
+        private TextBox messageTextBox;
+        private Button sendButton;
+
+        public Form1()
+        {
+            InitializeComponent(); // from Designer
+            InitializeUI();
+        }
+
+        // Keep designer InitializeComponent in Form1.Designer.cs. Provide Load handler referenced there.
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // Ensure message box is editable and focused so user can type immediately
+            try
+            {
+                if (messageTextBox != null)
+                {
+                    messageTextBox.ReadOnly = false;
+                    messageTextBox.Enabled = true;
+                    messageTextBox.TabStop = true;
+                    // Focus username first if empty
+                    if (!string.IsNullOrWhiteSpace(usernameTextBox?.Text))
+                        messageTextBox.Focus();
+                    else
+                        usernameTextBox?.Focus();
+                }
+            }
+            catch { }
+        }
+
+        private void InitializeUI()
+        {
+            // Clear any existing controls that Designer may have added
+            this.Controls.Clear();
+
+            // Use SplitContainer to create a modern layout
+            var mainSplit = new SplitContainer();
+            mainSplit.Dock = DockStyle.Fill;
+            mainSplit.SplitterDistance = 320; // left width
+            mainSplit.FixedPanel = FixedPanel.Panel1;
+            mainSplit.IsSplitterFixed = false;
+            this.Controls.Add(mainSplit);
+
+            // LEFT PANEL: Connection area + Users
+            var leftLayout = new TableLayoutPanel();
+            leftLayout.Dock = DockStyle.Fill;
+            leftLayout.RowCount = 2;
+            leftLayout.ColumnCount = 1;
+            leftLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 200));
+            leftLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+            mainSplit.Panel1.Controls.Add(leftLayout);
+
+            // Connection group (top-left)
+            var connectionGroup = new GroupBox();
+            connectionGroup.Text = "Bağlantı";
+            connectionGroup.Dock = DockStyle.Fill;
+            leftLayout.Controls.Add(connectionGroup, 0, 0);
+
+            var connTable = new TableLayoutPanel();
+            connTable.Dock = DockStyle.Fill;
+            connTable.ColumnCount = 2;
+            connTable.RowCount = 5;
+            connTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100));
+            connTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+            connTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
+            connTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
+            connTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
+            connTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 40));
+            connTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
+            connectionGroup.Controls.Add(connTable);
+
+            // Server
+            serverLabel = new Label();
+            serverLabel.Text = "Server:";
+            serverLabel.TextAlign = ContentAlignment.MiddleLeft;
+            serverLabel.Dock = DockStyle.Fill;
+            connTable.Controls.Add(serverLabel, 0, 0);
+
+            serverTextBox = new TextBox();
+            serverTextBox.Text = "127.0.0.1";
+            serverTextBox.Dock = DockStyle.Fill;
+            connTable.Controls.Add(serverTextBox, 1, 0);
+
+            // Port
+            portLabel = new Label();
+            portLabel.Text = "Port:";
+            portLabel.TextAlign = ContentAlignment.MiddleLeft;
+            portLabel.Dock = DockStyle.Fill;
+            connTable.Controls.Add(portLabel, 0, 1);
+
+            portNumericUpDown = new NumericUpDown();
+            portNumericUpDown.Minimum = 1;
+            portNumericUpDown.Maximum = 65535;
+            portNumericUpDown.Value = 5000;
+            portNumericUpDown.Dock = DockStyle.Fill;
+            connTable.Controls.Add(portNumericUpDown, 1, 1);
+
+            // Username
+            usernameLabel = new Label();
+            usernameLabel.Text = "Kullanıcı Adı:";
+            usernameLabel.TextAlign = ContentAlignment.MiddleLeft;
+            usernameLabel.Dock = DockStyle.Fill;
+            connTable.Controls.Add(usernameLabel, 0, 2);
+
+            usernameTextBox = new TextBox();
+            usernameTextBox.Dock = DockStyle.Fill;
+            connTable.Controls.Add(usernameTextBox, 1, 2);
+
+            // Buttons panel (connect / disconnect)
+            var btnPanel = new FlowLayoutPanel();
+            btnPanel.FlowDirection = FlowDirection.LeftToRight;
+            btnPanel.Dock = DockStyle.Fill;
+            connectButton = new Button();
+            connectButton.Text = "Bağlan";
+            connectButton.Width = 120;
+            connectButton.Click += ConnectButton_Click;
+            disconnectButton = new Button();
+            disconnectButton.Text = "Bağlantıyı Kes";
+            disconnectButton.Width = 120;
+            disconnectButton.Enabled = false;
+            disconnectButton.Click += DisconnectButton_Click;
+            btnPanel.Controls.Add(connectButton);
+            btnPanel.Controls.Add(disconnectButton);
+            connTable.Controls.Add(btnPanel, 1, 3);
+
+            // Status label
+            statusLabel = new Label();
+            statusLabel.Text = "❌ Bağlı Değil";
+            statusLabel.ForeColor = Color.Red;
+            statusLabel.Dock = DockStyle.Fill;
+            connTable.Controls.Add(statusLabel, 1, 4);
+
+            // Users list (bottom-left)
+            var usersGroup = new GroupBox();
+            usersGroup.Text = "Kullanıcılar";
+            usersGroup.Dock = DockStyle.Fill;
+            leftLayout.Controls.Add(usersGroup, 0, 1);
+
+            usersListBox = new ListBox();
+            usersListBox.Dock = DockStyle.Fill;
+            usersGroup.Controls.Add(usersListBox);
+
+            // RIGHT PANEL: Messages + input
+            var rightLayout = new TableLayoutPanel();
+            rightLayout.Dock = DockStyle.Fill;
+            rightLayout.RowCount = 2;
+            rightLayout.ColumnCount = 1;
+            rightLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+            rightLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 100));
+            mainSplit.Panel2.Controls.Add(rightLayout);
+
+            // Messages area
+            messageListBox = new ListBox();
+            messageListBox.Dock = DockStyle.Fill;
+            messageListBox.HorizontalScrollbar = true;
+            messageListBox.IntegralHeight = false;
+            rightLayout.Controls.Add(messageListBox, 0, 0);
+
+            // Input panel
+            bottomPanel = new Panel();
+            bottomPanel.Dock = DockStyle.Fill;
+            bottomPanel.Padding = new Padding(8);
+            rightLayout.Controls.Add(bottomPanel, 0, 1);
+
+            // Inside bottom panel: message text and send/clear buttons
+            var inputTable = new TableLayoutPanel();
+            inputTable.Dock = DockStyle.Fill;
+            inputTable.ColumnCount = 3;
+            inputTable.RowCount = 1;
+            inputTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+            inputTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100));
+            inputTable.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100));
+            bottomPanel.Controls.Add(inputTable);
+
+            messageTextBox = new TextBox();
+            messageTextBox.Multiline = true;
+            messageTextBox.ScrollBars = ScrollBars.Vertical;
+            messageTextBox.Dock = DockStyle.Fill;
+            messageTextBox.KeyDown += MessageTextBox_KeyDown;
+            inputTable.Controls.Add(messageTextBox, 0, 0);
+
+            sendButton = new Button();
+            sendButton.Text = "Gönder";
+            sendButton.Dock = DockStyle.Fill;
+            sendButton.Enabled = false;
+            sendButton.Click += SendButton_Click;
+            inputTable.Controls.Add(sendButton, 1, 0);
+
+            var clearButton = new Button();
+            clearButton.Text = "Temizle";
+            clearButton.Dock = DockStyle.Fill;
+            clearButton.Click += (s, e) => { messageListBox.Items.Clear(); messages.Clear(); AddSystemMessage("Mesajlar temizlendi"); };
+            inputTable.Controls.Add(clearButton, 2, 0);
+
+            // Ensure controls z-order
+            mainSplit.BringToFront();
+        }
+
+        private void ConnectButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(usernameTextBox.Text))
+            {
+                MessageBox.Show("Lütfen kullanıcı adı girin!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            username = usernameTextBox.Text.Trim();
+
+            try
+            {
+                clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                clientSocket.Connect(new IPEndPoint(IPAddress.Parse(serverTextBox.Text), (int)portNumericUpDown.Value));
+                isConnected = true;
+
+                // Bağlantı mesajı gönder
+                string connectMsg = $"CONNECT:{username}";
+                clientSocket.Send(Encoding.UTF8.GetBytes(connectMsg));
+
+                statusLabel.Text = "✓ Bağlı";
+                statusLabel.ForeColor = Color.Green;
+                connectButton.Enabled = false;
+                disconnectButton.Enabled = true;
+                sendButton.Enabled = true;
+                usernameTextBox.Enabled = false;
+                serverTextBox.Enabled = false;
+                portNumericUpDown.Enabled = false;
+
+                AddSystemMessage($"{username} sunucuya bağlandı");
+
+                Task.Run(() => ReceiveMessages());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Bağlantı hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isConnected = false;
+            }
+        }
+
+        private void DisconnectButton_Click(object sender, EventArgs e)
+        {
+            Disconnect();
+        }
+
+        private void SendButton_Click(object sender, EventArgs e)
+        {
+            if (!isConnected || string.IsNullOrEmpty(messageTextBox.Text))
+            {
+                MessageBox.Show("Bağlı değilsiniz veya mesaj boş!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                string message = messageTextBox.Text.Trim();
+                string fullMsg = $"{username}: {message}";
+                byte[] data = Encoding.UTF8.GetBytes(fullMsg);
+                clientSocket.Send(data);
+
+                AddMessage(username, message, "Benden");
+                messageTextBox.Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Mesaj gönderme hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void MessageTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Enter to send, Shift+Enter for newline
+            if (e.KeyCode == Keys.Enter && !e.Shift)
+            {
+                e.SuppressKeyPress = true; // prevent newline
+                if (sendButton != null && sendButton.Enabled)
+                {
+                    SendButton_Click(sendButton, EventArgs.Empty);
+                }
+            }
+        }
+
+        private void ReceiveMessages()
+        {
+            byte[] buffer = new byte[4096];
+
+            try
+            {
+                while (isConnected)
+                {
+                    int bytesRead = clientSocket.Receive(buffer);
+
+                    if (bytesRead > 0)
+                    {
+                        string receivedMsg = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+
+                        this.Invoke((Action)(() =>
+                        {
+                            if (receivedMsg.StartsWith("CONNECT:"))
+                            {
+                                string user = receivedMsg.Replace("CONNECT:", "");
+                                AddSystemMessage($"{user} sohbete katıldı");
+                                if (usersListBox != null && !usersListBox.Items.Contains(user))
+                                    usersListBox.Items.Add(user);
+                            }
+                            else if (receivedMsg.Contains(":"))
+                            {
+                                string[] parts = receivedMsg.Split(new[] { ':' }, 2);
+                                if (parts.Length == 2)
+                                {
+                                    AddMessage(parts[0], parts[1].Trim(), "Diğerleri");
+                                }
+                            }
+                        }));
+                    }
+                    else
+                    {
+                        isConnected = false;
+                    }
+                }
+            }
+            catch
+            {
+                if (isConnected)
+                {
+                    this.Invoke((Action)(() =>
+                    {
+                        MessageBox.Show("Sunucu bağlantısı kesildi!", "Bağlantı Hatası", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Disconnect();
+                    }));
+                }
+            }
+        }
+
+        private void AddMessage(string sender, string messageText, string type)
+        {
+            var msg = new ChatMessage
+            {
+                Gönderen = sender,
+                Mesaj = messageText,
+                Zaman = DateTime.Now.ToString("HH:mm:ss"),
+                Tip = type
+            };
+
+            messages.Add(msg);
+
+            if (messageListBox != null)
+            {
+                messageListBox.Items.Add($"{msg.Zaman} {msg.Gönderen}: {msg.Mesaj}");
+                try { messageListBox.SelectedIndex = messageListBox.Items.Count - 1; } catch { }
+            }
+        }
+
+        private void AddSystemMessage(string message)
+        {
+            var msg = new ChatMessage
+            {
+                Gönderen = "SİSTEM",
+                Mesaj = message,
+                Zaman = DateTime.Now.ToString("HH:mm:ss"),
+                Tip = "Sistem"
+            };
+
+            messages.Add(msg);
+
+            if (messageListBox != null)
+            {
+                messageListBox.Items.Add($"{msg.Zaman} {msg.Gönderen}: {msg.Mesaj}");
+                try { messageListBox.SelectedIndex = messageListBox.Items.Count - 1; } catch { }
+            }
+
+            // Update users list when someone joins / leaves (basic parsing)
+            try
+            {
+                if (usersListBox != null && message.EndsWith("sohbete katıldı"))
+                {
+                    string user = message.Substring(0, message.IndexOf(" sohbete katıldı", StringComparison.Ordinal));
+                    if (!usersListBox.Items.Contains(user))
+                        usersListBox.Items.Add(user);
+                }
+                else if (usersListBox != null && message.EndsWith("çıkış yaptı"))
+                {
+                    string user = message.Substring(0, message.IndexOf(" çıkış yaptı", StringComparison.Ordinal));
+                    if (usersListBox.Items.Contains(user))
+                        usersListBox.Items.Remove(user);
+                }
+            }
+            catch { }
+        }
+
+        private void Disconnect()
+        {
+            if (clientSocket != null)
+            {
+                try
+                {
+                    clientSocket.Close();
+                }
+                catch { }
+                clientSocket = null;
+            }
+
+            isConnected = false;
+            statusLabel.Text = "❌ Bağlı Değil";
+            statusLabel.ForeColor = Color.Red;
+            connectButton.Enabled = true;
+            disconnectButton.Enabled = false;
+            sendButton.Enabled = false;
+            usernameTextBox.Enabled = true;
+            serverTextBox.Enabled = true;
+            portNumericUpDown.Enabled = true;
+
+            AddSystemMessage($"{username} çıkış yaptı");
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Disconnect();
+            base.OnFormClosing(e);
+        }
+    }
+
+    // Chat Mesaj Modeli
+    public class ChatMessage
+    {
+        public string Gönderen { get; set; }
+        public string Mesaj { get; set; }
+        public string Zaman { get; set; }
+        public string Tip { get; set; }
+    }
+}

@@ -1,0 +1,13 @@
+C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\obj\Debug\ChatSocketApp.csproj.AssemblyReference.cache
+C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\obj\Debug\ChatSocketApp.Properties.Resources.resources
+C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\obj\Debug\ChatSocketApp.csproj.GenerateResource.cache
+C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\obj\Debug\ChatSocketApp.csproj.CoreCompileInputs.cache
+C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\bin\Debug\ChatSocketApp.exe.config
+C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\bin\Debug\ChatSocketApp.exe
+C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\bin\Debug\ChatSocketApp.pdb
+C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\obj\Debug\ChatSocketApp.exe
+C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\obj\Debug\ChatSocketApp.pdb
+C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\obj\Debug\ChatSock.D501F711.Up2Date
+C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\obj\Debug\ChatSocketApp.XtraForm1.resources
+C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\obj\Debug\ChatSocketApp.exe.licenses
+C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\obj\Debug\ChatSocketApp.exe.config

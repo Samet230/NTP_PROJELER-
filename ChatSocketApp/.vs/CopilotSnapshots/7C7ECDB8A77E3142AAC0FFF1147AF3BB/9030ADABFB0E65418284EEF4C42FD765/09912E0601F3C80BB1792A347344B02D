@@ -1,0 +1,179 @@
+﻿using DevExpress.XtraEditors;
+using System;
+
+namespace ChatSocketApp
+{
+    partial class XtraForm1
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        private PanelControl topPanel;
+        private LabelControl serverLabel;
+        private TextEdit serverTextEdit;
+        private LabelControl portLabel;
+        private SpinEdit portSpinEdit;
+        private LabelControl usernameLabel;
+        private TextEdit usernameTextEdit;
+        private SimpleButton connectButton;
+        private SimpleButton disconnectButton;
+        private LabelControl statusLabel;
+
+        private ListBoxControl messageListControl;
+
+        private PanelControl bottomPanel;
+        private MemoEdit messageTextEdit;
+        private SimpleButton sendButton;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+
+            // Form
+            this.SuspendLayout();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 700);
+            this.Name = "XtraForm1";
+            this.Text = "XtraForm1";
+
+            // Top panel
+            this.topPanel = new DevExpress.XtraEditors.PanelControl();
+            this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.topPanel.Height = 120;
+            this.topPanel.Padding = new System.Windows.Forms.Padding(10);
+            this.Controls.Add(this.topPanel);
+
+            // Server label and edit
+            this.serverLabel = new DevExpress.XtraEditors.LabelControl();
+            this.serverLabel.Text = "Server:";
+            this.serverLabel.Location = new System.Drawing.Point(10, 10);
+            this.serverLabel.Width = 50;
+            this.topPanel.Controls.Add(this.serverLabel);
+
+            this.serverTextEdit = new DevExpress.XtraEditors.TextEdit();
+            this.serverTextEdit.Name = "serverTextEdit";
+            this.serverTextEdit.Text = "127.0.0.1";
+            this.serverTextEdit.Location = new System.Drawing.Point(70, 10);
+            this.serverTextEdit.Width = 120;
+            this.topPanel.Controls.Add(this.serverTextEdit);
+
+            // Port label and spin
+            this.portLabel = new DevExpress.XtraEditors.LabelControl();
+            this.portLabel.Text = "Port:";
+            this.portLabel.Location = new System.Drawing.Point(200, 10);
+            this.portLabel.Width = 40;
+            this.topPanel.Controls.Add(this.portLabel);
+
+            this.portSpinEdit = new DevExpress.XtraEditors.SpinEdit();
+            this.portSpinEdit.Name = "portSpinEdit";
+            this.portSpinEdit.Location = new System.Drawing.Point(250, 10);
+            this.portSpinEdit.Width = 80;
+            this.portSpinEdit.Properties.IsFloatValue = false;
+            this.portSpinEdit.Properties.MinValue = 1;
+            this.portSpinEdit.Properties.MaxValue = 65535;
+            this.portSpinEdit.Value = 5000;
+            this.topPanel.Controls.Add(this.portSpinEdit);
+
+            // Username label and edit
+            this.usernameLabel = new DevExpress.XtraEditors.LabelControl();
+            this.usernameLabel.Text = "Kullanıcı Adı:";
+            this.usernameLabel.Location = new System.Drawing.Point(350, 10);
+            this.usernameLabel.Width = 80;
+            this.topPanel.Controls.Add(this.usernameLabel);
+
+            this.usernameTextEdit = new DevExpress.XtraEditors.TextEdit();
+            this.usernameTextEdit.Name = "usernameTextEdit";
+            this.usernameTextEdit.Location = new System.Drawing.Point(440, 10);
+            this.usernameTextEdit.Width = 120;
+            this.topPanel.Controls.Add(this.usernameTextEdit);
+
+            // Connect button
+            this.connectButton = new DevExpress.XtraEditors.SimpleButton();
+            this.connectButton.Name = "connectButton";
+            this.connectButton.Text = "Bağlan";
+            this.connectButton.Location = new System.Drawing.Point(570, 10);
+            this.connectButton.Size = new System.Drawing.Size(100, 25);
+            this.connectButton.Click += new System.EventHandler(this.ConnectButton_Click);
+            this.topPanel.Controls.Add(this.connectButton);
+
+            // Disconnect button
+            this.disconnectButton = new DevExpress.XtraEditors.SimpleButton();
+            this.disconnectButton.Name = "disconnectButton";
+            this.disconnectButton.Text = "Bağlantıyı Kes";
+            this.disconnectButton.Location = new System.Drawing.Point(680, 10);
+            this.disconnectButton.Size = new System.Drawing.Size(100, 25);
+            this.disconnectButton.Click += new System.EventHandler(this.DisconnectButton_Click);
+            this.disconnectButton.Enabled = false;
+            this.topPanel.Controls.Add(this.disconnectButton);
+
+            // Status label
+            this.statusLabel = new DevExpress.XtraEditors.LabelControl();
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Text = "❌ Bağlı Değil";
+            this.statusLabel.Appearance.ForeColor = System.Drawing.Color.Red;
+            this.statusLabel.Location = new System.Drawing.Point(10, 50);
+            this.statusLabel.Width = 200;
+            this.topPanel.Controls.Add(this.statusLabel);
+
+            // Message list (center)
+            this.messageListControl = new DevExpress.XtraEditors.ListBoxControl();
+            this.messageListControl.Name = "messageListControl";
+            this.messageListControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.messageListControl.HorizontalScrollbar = true;
+            this.messageListControl.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.Controls.Add(this.messageListControl);
+
+            // Bottom panel
+            this.bottomPanel = new DevExpress.XtraEditors.PanelControl();
+            this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.bottomPanel.Height = 100;
+            this.bottomPanel.Padding = new System.Windows.Forms.Padding(10);
+            this.Controls.Add(this.bottomPanel);
+
+            // Message editor
+            this.messageTextEdit = new DevExpress.XtraEditors.MemoEdit();
+            this.messageTextEdit.Name = "messageTextEdit";
+            this.messageTextEdit.Location = new System.Drawing.Point(10, 10);
+            this.messageTextEdit.Size = new System.Drawing.Size(650, 80);
+            this.messageTextEdit.Properties.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.bottomPanel.Controls.Add(this.messageTextEdit);
+
+            // Send button
+            this.sendButton = new DevExpress.XtraEditors.SimpleButton();
+            this.sendButton.Name = "sendButton";
+            this.sendButton.Text = "Gönder";
+            this.sendButton.Location = new System.Drawing.Point(670, 10);
+            this.sendButton.Size = new System.Drawing.Size(100, 80);
+            this.sendButton.Click += new System.EventHandler(this.SendButton_Click);
+            this.sendButton.Enabled = false;
+            this.bottomPanel.Controls.Add(this.sendButton);
+
+            // Finalize
+            this.Load += new System.EventHandler(this.XtraForm1_Load);
+            this.ResumeLayout(false);
+        }
+
+        #endregion
+    }
+}

@@ -1,0 +1,15 @@
+C:\Users\smt1s\OneDrive\Belgeler\GitHub\NTP_PROJELER-\Ceviri_App\bin\Debug\net8.0-windows\Ceviri_App.exe
+C:\Users\smt1s\OneDrive\Belgeler\GitHub\NTP_PROJELER-\Ceviri_App\bin\Debug\net8.0-windows\Ceviri_App.deps.json
+C:\Users\smt1s\OneDrive\Belgeler\GitHub\NTP_PROJELER-\Ceviri_App\bin\Debug\net8.0-windows\Ceviri_App.runtimeconfig.json
+C:\Users\smt1s\OneDrive\Belgeler\GitHub\NTP_PROJELER-\Ceviri_App\bin\Debug\net8.0-windows\Ceviri_App.dll
+C:\Users\smt1s\OneDrive\Belgeler\GitHub\NTP_PROJELER-\Ceviri_App\bin\Debug\net8.0-windows\Ceviri_App.pdb
+C:\Users\smt1s\OneDrive\Belgeler\GitHub\NTP_PROJELER-\Ceviri_App\obj\Debug\net8.0-windows\Ceviri_App.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\smt1s\OneDrive\Belgeler\GitHub\NTP_PROJELER-\Ceviri_App\obj\Debug\net8.0-windows\Ceviri_App.AssemblyInfoInputs.cache
+C:\Users\smt1s\OneDrive\Belgeler\GitHub\NTP_PROJELER-\Ceviri_App\obj\Debug\net8.0-windows\Ceviri_App.AssemblyInfo.cs
+C:\Users\smt1s\OneDrive\Belgeler\GitHub\NTP_PROJELER-\Ceviri_App\obj\Debug\net8.0-windows\Ceviri_App.csproj.CoreCompileInputs.cache
+C:\Users\smt1s\OneDrive\Belgeler\GitHub\NTP_PROJELER-\Ceviri_App\obj\Debug\net8.0-windows\Ceviri_App.sourcelink.json
+C:\Users\smt1s\OneDrive\Belgeler\GitHub\NTP_PROJELER-\Ceviri_App\obj\Debug\net8.0-windows\Ceviri_App.dll
+C:\Users\smt1s\OneDrive\Belgeler\GitHub\NTP_PROJELER-\Ceviri_App\obj\Debug\net8.0-windows\refint\Ceviri_App.dll
+C:\Users\smt1s\OneDrive\Belgeler\GitHub\NTP_PROJELER-\Ceviri_App\obj\Debug\net8.0-windows\Ceviri_App.pdb
+C:\Users\smt1s\OneDrive\Belgeler\GitHub\NTP_PROJELER-\Ceviri_App\obj\Debug\net8.0-windows\Ceviri_App.genruntimeconfig.cache
+C:\Users\smt1s\OneDrive\Belgeler\GitHub\NTP_PROJELER-\Ceviri_App\obj\Debug\net8.0-windows\ref\Ceviri_App.dll

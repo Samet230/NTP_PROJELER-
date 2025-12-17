@@ -1,0 +1,318 @@
+﻿using DevExpress.XtraEditors;
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace ChatSocketApp
+{
+    public partial class XtraForm1 : XtraForm
+    {
+        private Socket clientSocket;
+        private string username;
+        private bool isConnected = false;
+        private BindingList<ChatMessage> messages = new BindingList<ChatMessage>();
+
+        // DevExpress UI controls
+        private PanelControl topPanel;
+        private LabelControl serverLabel;
+        private TextEdit serverTextEdit;
+        private LabelControl portLabel;
+        private SpinEdit portSpinEdit;
+        private LabelControl usernameLabel;
+        private TextEdit usernameTextEdit;
+        private SimpleButton connectButton;
+        private SimpleButton disconnectButton;
+        private LabelControl statusLabel;
+
+        private ListBoxControl messageListControl;
+
+        private PanelControl bottomPanel;
+        private MemoEdit messageTextEdit;
+        private SimpleButton sendButton;
+
+        public XtraForm1()
+        {
+            InitializeComponent();
+            InitializeUI();
+        }
+
+        private void XtraForm1_Load(object sender, EventArgs e)
+        {
+            // Designer references this handler; keep empty unless needed
+        }
+
+        private void InitializeUI()
+        {
+            // Form basic properties (can be overridden in designer)
+            this.Text = "Chat Socket Uygulaması - DevExpress";
+            this.Width = 800;
+            this.Height = 700;
+            this.StartPosition = FormStartPosition.CenterScreen;
+
+            // ===== TOP PANEL =====
+            topPanel = new PanelControl();
+            topPanel.Dock = DockStyle.Top;
+            topPanel.Height = 120;
+            topPanel.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            topPanel.Padding = new Padding(10);
+            topPanel.Appearance.BackColor = Color.FromArgb(240, 240, 240);
+            topPanel.Appearance.Options.UseBackColor = true;
+            this.Controls.Add(topPanel);
+
+            // Server
+            serverLabel = new LabelControl { Text = "Server:", Location = new Point(10, 10), Width = 50 };
+            topPanel.Controls.Add(serverLabel);
+
+            serverTextEdit = new TextEdit { Text = "127.0.0.1", Location = new Point(70, 10), Width = 120 };
+            topPanel.Controls.Add(serverTextEdit);
+
+            // Port
+            portLabel = new LabelControl { Text = "Port:", Location = new Point(200, 10), Width = 40 };
+            topPanel.Controls.Add(portLabel);
+
+            portSpinEdit = new SpinEdit { Location = new Point(250, 10), Width = 80 };
+            portSpinEdit.Properties.IsFloatValue = false;
+            portSpinEdit.Properties.MinValue = 1;
+            portSpinEdit.Properties.MaxValue = 65535;
+            portSpinEdit.Value = 5000;
+            topPanel.Controls.Add(portSpinEdit);
+
+            // Username
+            usernameLabel = new LabelControl { Text = "Kullanıcı Adı:", Location = new Point(350, 10), Width = 80 };
+            topPanel.Controls.Add(usernameLabel);
+
+            usernameTextEdit = new TextEdit { Location = new Point(440, 10), Width = 120 };
+            topPanel.Controls.Add(usernameTextEdit);
+
+            // Connect button
+            connectButton = new SimpleButton { Text = "Bağlan", Location = new Point(570, 10), Width = 100, Height = 25 };
+            connectButton.Click += ConnectButton_Click;
+            topPanel.Controls.Add(connectButton);
+
+            // Disconnect button
+            disconnectButton = new SimpleButton { Text = "Bağlantıyı Kes", Location = new Point(680, 10), Width = 100, Height = 25, Enabled = false };
+            disconnectButton.Click += DisconnectButton_Click;
+            topPanel.Controls.Add(disconnectButton);
+
+            // Status label
+            statusLabel = new LabelControl { Text = "❌ Bağlı Değil", Location = new Point(10, 50), Width = 200 };
+            statusLabel.Appearance.ForeColor = Color.Red;
+            topPanel.Controls.Add(statusLabel);
+
+            // ===== MESSAGE LIST =====
+            messageListControl = new ListBoxControl();
+            messageListControl.Dock = DockStyle.Fill;
+            messageListControl.HorizontalScrollbar = true;
+            messageListControl.SelectionMode = SelectionMode.None;
+            this.Controls.Add(messageListControl);
+
+            // ===== BOTTOM PANEL =====
+            bottomPanel = new PanelControl();
+            bottomPanel.Dock = DockStyle.Bottom;
+            bottomPanel.Height = 100;
+            bottomPanel.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            bottomPanel.Padding = new Padding(10);
+            bottomPanel.Appearance.BackColor = Color.FromArgb(240, 240, 240);
+            bottomPanel.Appearance.Options.UseBackColor = true;
+            this.Controls.Add(bottomPanel);
+
+            messageTextEdit = new MemoEdit { Location = new Point(10, 10), Width = 650, Height = 80 };
+            messageTextEdit.Properties.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            bottomPanel.Controls.Add(messageTextEdit);
+
+            sendButton = new SimpleButton { Text = "Gönder", Location = new Point(670, 10), Width = 100, Height = 80, Enabled = false };
+            sendButton.Click += SendButton_Click;
+            bottomPanel.Controls.Add(sendButton);
+
+            // Ensure top and bottom panels are visible
+            topPanel.BringToFront();
+            bottomPanel.BringToFront();
+        }
+
+        private void ConnectButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(usernameTextEdit.Text))
+            {
+                XtraMessageBox.Show("Lütfen kullanıcı adı girin!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            username = usernameTextEdit.Text.Trim();
+
+            try
+            {
+                clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                clientSocket.Connect(new IPEndPoint(IPAddress.Parse(serverTextEdit.Text.Trim()), Convert.ToInt32(portSpinEdit.Value)));
+                isConnected = true;
+
+                // Send connect message
+                string connectMsg = $"CONNECT:{username}";
+                clientSocket.Send(Encoding.UTF8.GetBytes(connectMsg));
+
+                statusLabel.Text = "✓ Bağlı";
+                statusLabel.Appearance.ForeColor = Color.Green;
+                connectButton.Enabled = false;
+                disconnectButton.Enabled = true;
+                sendButton.Enabled = true;
+                usernameTextEdit.Enabled = false;
+                serverTextEdit.Enabled = false;
+                portSpinEdit.Enabled = false;
+
+                AddSystemMessage($"{username} sunucuya bağlandı");
+
+                Task.Run(() => ReceiveMessages());
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show($"Bağlantı hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isConnected = false;
+            }
+        }
+
+        private void DisconnectButton_Click(object sender, EventArgs e)
+        {
+            Disconnect();
+        }
+
+        private void SendButton_Click(object sender, EventArgs e)
+        {
+            if (!isConnected || string.IsNullOrWhiteSpace(messageTextEdit.Text))
+            {
+                XtraMessageBox.Show("Bağlı değilsiniz veya mesaj boş!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                string message = messageTextEdit.Text.Trim();
+                string fullMsg = $"{username}: {message}";
+                byte[] data = Encoding.UTF8.GetBytes(fullMsg);
+                clientSocket.Send(data);
+
+                AddMessage(username, message, "Benden");
+                messageTextEdit.Clear();
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show($"Mesaj gönderme hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ReceiveMessages()
+        {
+            byte[] buffer = new byte[4096];
+
+            try
+            {
+                while (isConnected)
+                {
+                    int bytesRead = clientSocket.Receive(buffer);
+
+                    if (bytesRead > 0)
+                    {
+                        string receivedMsg = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+
+                        this.Invoke((Action)(() =>
+                        {
+                            if (receivedMsg.StartsWith("CONNECT:"))
+                            {
+                                string user = receivedMsg.Replace("CONNECT:", "");
+                                AddSystemMessage($"{user} sohbete katıldı");
+                            }
+                            else if (receivedMsg.Contains(":"))
+                            {
+                                string[] parts = receivedMsg.Split(new[] { ':' }, 2);
+                                if (parts.Length == 2)
+                                {
+                                    AddMessage(parts[0], parts[1].Trim(), "Diğerleri");
+                                }
+                            }
+                        }));
+                    }
+                    else
+                    {
+                        isConnected = false;
+                    }
+                }
+            }
+            catch
+            {
+                if (isConnected)
+                {
+                    this.Invoke((Action)(() =>
+                    {
+                        XtraMessageBox.Show("Sunucu bağlantısı kesildi!", "Bağlantı Hatası", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Disconnect();
+                    }));
+                }
+            }
+        }
+
+        private void AddMessage(string sender, string messageText, string type)
+        {
+            var msg = new ChatMessage
+            {
+                Gönderen = sender,
+                Mesaj = messageText,
+                Zaman = DateTime.Now.ToString("HH:mm:ss"),
+                Tip = type
+            };
+
+            messages.Add(msg);
+            messageListControl.Items.Add($"{msg.Zaman} {msg.Gönderen}: {msg.Mesaj}");
+
+            // Scroll to last
+            try { messageListControl.SelectedIndex = messageListControl.Items.Count - 1; }
+            catch { }
+        }
+
+        private void AddSystemMessage(string message)
+        {
+            var msg = new ChatMessage
+            {
+                Gönderen = "SİSTEM",
+                Mesaj = message,
+                Zaman = DateTime.Now.ToString("HH:mm:ss"),
+                Tip = "Sistem"
+            };
+
+            messages.Add(msg);
+            messageListControl.Items.Add($"{msg.Zaman} {msg.Gönderen}: {msg.Mesaj}");
+
+            try { messageListControl.SelectedIndex = messageListControl.Items.Count - 1; }
+            catch { }
+        }
+
+        private void Disconnect()
+        {
+            if (clientSocket != null)
+            {
+                try { clientSocket.Close(); } catch { }
+                clientSocket = null;
+            }
+
+            isConnected = false;
+            statusLabel.Text = "❌ Bağlı Değil";
+            statusLabel.Appearance.ForeColor = Color.Red;
+            connectButton.Enabled = true;
+            disconnectButton.Enabled = false;
+            sendButton.Enabled = false;
+            usernameTextEdit.Enabled = true;
+            serverTextEdit.Enabled = true;
+            portSpinEdit.Enabled = true;
+
+            AddSystemMessage($"{username} çıkış yaptı");
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Disconnect();
+            base.OnFormClosing(e);
+        }
+    }
+}

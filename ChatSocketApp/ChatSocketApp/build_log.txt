@@ -1,0 +1,13 @@
+﻿  Geri y├╝klenecek projeler belirleniyor...
+  Yap─▒lacak i┼şlem yok. Belirtilen projelerden hi├ğbiri geri y├╝klenecek paketleri i├ğermiyor.
+C:\Program Files\dotnet\sdk\9.0.305\Microsoft.Common.CurrentVersion.targets(3455,5): error MSB4216: MSBuild "NET" ├ğal─▒┼şma zaman─▒ ve "x86" mimarisi ile bir g├Ârev olu┼şturmad─▒─ş─▒ndan veya g├Ârev kona─ş─▒na ba─şlanamad─▒─ş─▒ndan "GenerateResource" g├Ârevi ├ğal─▒┼şt─▒r─▒lamad─▒.  L├╝tfen (1) istenen ├ğal─▒┼şma zaman─▒ ve/veya mimarinin makinede kullan─▒labildi─şinden ve (2) gerekli y├╝r├╝t├╝lebilir "C:\Program Files\dotnet\sdk\9.0.305\MSBuild.dll" ├Â─şesinin mevcut ve ├ğal─▒┼şt─▒r─▒labilir oldu─şundan emin olun. [C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\ChatSocketApp.csproj]
+C:\Program Files\dotnet\sdk\9.0.305\Microsoft.Common.CurrentVersion.targets(3479,7): error MSB4028: "GenerateResource" g├Ârevinin ├ğ─▒k─▒┼şlar─▒ "FilesWritten" parametresinden al─▒namad─▒. Object type Microsoft.Build.Tasks.GenerateResource does not match target type Microsoft.Build.BackEnd.TaskHostTask. [C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\ChatSocketApp.csproj]
+
+Olu┼şturma BA┼ŞARISIZ OLDU.
+
+C:\Program Files\dotnet\sdk\9.0.305\Microsoft.Common.CurrentVersion.targets(3455,5): error MSB4216: MSBuild "NET" ├ğal─▒┼şma zaman─▒ ve "x86" mimarisi ile bir g├Ârev olu┼şturmad─▒─ş─▒ndan veya g├Ârev kona─ş─▒na ba─şlanamad─▒─ş─▒ndan "GenerateResource" g├Ârevi ├ğal─▒┼şt─▒r─▒lamad─▒.  L├╝tfen (1) istenen ├ğal─▒┼şma zaman─▒ ve/veya mimarinin makinede kullan─▒labildi─şinden ve (2) gerekli y├╝r├╝t├╝lebilir "C:\Program Files\dotnet\sdk\9.0.305\MSBuild.dll" ├Â─şesinin mevcut ve ├ğal─▒┼şt─▒r─▒labilir oldu─şundan emin olun. [C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\ChatSocketApp.csproj]
+C:\Program Files\dotnet\sdk\9.0.305\Microsoft.Common.CurrentVersion.targets(3479,7): error MSB4028: "GenerateResource" g├Ârevinin ├ğ─▒k─▒┼şlar─▒ "FilesWritten" parametresinden al─▒namad─▒. Object type Microsoft.Build.Tasks.GenerateResource does not match target type Microsoft.Build.BackEnd.TaskHostTask. [C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\ChatSocketApp.csproj]
+    0 Uyar─▒
+    2 Hata
+
+Ge├ğen S├╝re 00:00:25.27

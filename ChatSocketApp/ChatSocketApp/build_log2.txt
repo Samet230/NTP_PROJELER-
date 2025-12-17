@@ -1,0 +1,29 @@
+﻿.NET Framework i├ğin MSBuild s├╝r├╝m 17.14.23+b0019275e
+Olu┼şturma ba┼şlat─▒ld─▒: 17.12.2025 16:49:35.
+
+1 d├╝─ş├╝m├╝nde "C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\ChatSocketApp.csproj" projesi (varsay─▒lan hedefler).
+GenerateBindingRedirectsUpdateAppConfig:
+  Dosya "C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\App.config" konumundan "C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\obj\Debug\ChatSocketApp.exe.config" konumuna kopyalan─▒yor.
+  "obj\Debug\ChatSocketApp.exe.config" ├Â─şesine eri┼şiliyor.
+CoreResGen:
+  ─░lgili kaynak dosyalar─▒na g├Âre kaynaklar─▒n t├╝m├╝ g├╝ncel. Kaynak olu┼şturma atlan─▒yor.
+CompileLicxFiles:
+T├╝m ├ğ─▒k─▒┼ş dosyalar─▒, giri┼ş dosyalar─▒na g├Âre g├╝ncel durumda oldu─şundan "CompileLicxFiles" hedefi atlan─▒yor.
+GenerateTargetFrameworkMonikerAttribute:
+T├╝m ├ğ─▒k─▒┼ş dosyalar─▒, giri┼ş dosyalar─▒na g├Âre g├╝ncel durumda oldu─şundan "GenerateTargetFrameworkMonikerAttribute" hedefi atlan─▒yor.
+CoreCompile:
+  C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Roslyn\csc.exe /noconfig /nowarn:1701,1702 /fullpaths /nostdlib+ /platform:anycpu32bitpreferred /errorreport:prompt /warn:4 /define:DEBUG;TRACE /highentropyva+ /reference:C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\bin\Debug\DevExpress.Data.Desktop.v24.1.dll /reference:C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\bin\Debug\DevExpress.Data.v24.1.dll /reference:C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\bin\Debug\DevExpress.Printing.v24.1.Core.dll /reference:C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\bin\Debug\DevExpress.Utils.v24.1.dll /reference:C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\bin\Debug\DevExpress.XtraBars.v24.1.dll /reference:C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\bin\Debug\DevExpress.XtraEditors.v24.1.dll /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\Microsoft.CSharp.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\mscorlib.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Core.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Data.DataSetExtensions.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Data.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Deployment.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Drawing.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Net.Http.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Windows.Forms.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Xml.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Xml.Linq.dll" /debug+ /debug:full /filealign:512 /optimize- /out:obj\Debug\ChatSocketApp.exe /subsystemversion:6.00 /resource:obj\Debug\ChatSocketApp.Properties.Resources.resources /resource:obj\Debug\ChatSocketApp.XtraForm1.resources /resource:obj\Debug\ChatSocketApp.exe.licenses /target:winexe /utf8output /deterministic+ /langversion:7.3 Models\ChatModels.cs Program.cs Properties\AssemblyInfo.cs XtraForm1.cs XtraForm1.Designer.cs Properties\Resources.Designer.cs Properties\Settings.Designer.cs "obj\Debug\.NETFramework,Version=v4.7.2.AssemblyAttributes.cs"
+C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\XtraForm1.cs(586,29): error CS0246: 'PopupMenu' t├╝r├╝ veya ad alan─▒ ad─▒ bulunamad─▒ (bir using y├Ânergeniz veya derleme ba┼şvurunuz mu eksik?) [C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\ChatSocketApp.csproj]
+  CompilerServer: server - server processed compilation - ChatSocketApp
+"C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\ChatSocketApp.csproj" Projesini Olu┼şturma ─░┼şlemi Tamamland─▒ (varsay─▒lan hedefler) -- BA┼ŞARISIZ OLDU.
+
+Olu┼şturma BA┼ŞARISIZ OLDU.
+
+"C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\ChatSocketApp.csproj" (varsay─▒lan hedef) (1) ->
+(CoreCompile hedefi) -> 
+  C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\XtraForm1.cs(586,29): error CS0246: 'PopupMenu' t├╝r├╝ veya ad alan─▒ ad─▒ bulunamad─▒ (bir using y├Ânergeniz veya derleme ba┼şvurunuz mu eksik?) [C:\Users\smt1s\source\repos\ChatSocketApp\ChatSocketApp\ChatSocketApp.csproj]
+
+    0 Uyar─▒
+    1 Hata
+
+Ge├ğen S├╝re 00:00:13.68

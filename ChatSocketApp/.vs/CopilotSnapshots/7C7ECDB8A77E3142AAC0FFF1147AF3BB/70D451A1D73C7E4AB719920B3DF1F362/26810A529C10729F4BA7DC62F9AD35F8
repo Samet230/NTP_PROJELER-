@@ -1,0 +1,410 @@
+﻿using DevExpress.Data;
+using DevExpress.XtraEditors;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Grid;
+using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace ChatSocketApp
+{
+    public partial class Form1 : XtraForm
+    {
+        private Socket clientSocket;
+        private string username;
+        private bool isConnected = false;
+        private BindingList<ChatMessage> messages = new BindingList<ChatMessage>();
+
+        // UI Kontrolleri
+        private PanelControl topPanel;
+        private PanelControl connectionPanel;
+        private LabelControl serverLabel;
+        private TextEdit serverTextEdit;
+        private LabelControl portLabel;
+        private SpinEdit portSpinEdit;
+        private LabelControl usernameLabel;
+        private TextEdit usernameTextEdit;
+        private SimpleButton connectButton;
+        private SimpleButton disconnectButton;
+        private LabelControl statusLabel;
+
+        private GridControl messageGridControl;
+        private GridView gridView;
+
+        private PanelControl bottomPanel;
+        private MemoEdit messageTextEdit;
+        private SimpleButton sendButton;
+
+        public Form1()
+        {
+            InitializeComponent();
+            InitializeUI();
+        }
+
+        private void InitializeComponent()
+        {
+            this.Text = "Chat Socket Uygulaması - DevExpress";
+            this.Width = 800;
+            this.Height = 700;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.BackColor = Color.White;
+        }
+
+        private void InitializeUI()
+        {
+            // ===== ÜST PANEL - BAĞLANTI AYARLARI =====
+            topPanel = new PanelControl();
+            topPanel.Dock = DockStyle.Top;
+            topPanel.Height = 120;
+            topPanel.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            topPanel.BackColor = Color.FromArgb(240, 240, 240);
+            topPanel.Padding = new Padding(10);
+            this.Controls.Add(topPanel);
+
+            // Server Adresi
+            serverLabel = new LabelControl();
+            serverLabel.Text = "Server:";
+            serverLabel.Location = new Point(10, 10);
+            serverLabel.Width = 50;
+            topPanel.Controls.Add(serverLabel);
+
+            serverTextEdit = new TextEdit();
+            serverTextEdit.Text = "127.0.0.1";
+            serverTextEdit.Location = new Point(70, 10);
+            serverTextEdit.Width = 120;
+            topPanel.Controls.Add(serverTextEdit);
+
+            // Port
+            portLabel = new LabelControl();
+            portLabel.Text = "Port:";
+            portLabel.Location = new Point(200, 10);
+            portLabel.Width = 40;
+            topPanel.Controls.Add(portLabel);
+
+            portSpinEdit = new SpinEdit();
+            portSpinEdit.Value = 5000;
+            portSpinEdit.Location = new Point(250, 10);
+            portSpinEdit.Width = 80;
+            topPanel.Controls.Add(portSpinEdit);
+
+            // Kullanıcı Adı
+            usernameLabel = new LabelControl();
+            usernameLabel.Text = "Kullanıcı Adı:";
+            usernameLabel.Location = new Point(350, 10);
+            usernameLabel.Width = 80;
+            topPanel.Controls.Add(usernameLabel);
+
+            usernameTextEdit = new TextEdit();
+            usernameTextEdit.Location = new Point(440, 10);
+            usernameTextEdit.Width = 120;
+            topPanel.Controls.Add(usernameTextEdit);
+
+            // Bağlan Butonu
+            connectButton = new SimpleButton();
+            connectButton.Text = "Bağlan";
+            connectButton.Location = new Point(570, 10);
+            connectButton.Width = 100;
+            connectButton.Height = 25;
+            connectButton.Click += ConnectButton_Click;
+            topPanel.Controls.Add(connectButton);
+
+            // Bağlantıyı Kes Butonu
+            disconnectButton = new SimpleButton();
+            disconnectButton.Text = "Bağlantıyı Kes";
+            disconnectButton.Location = new Point(680, 10);
+            disconnectButton.Width = 100;
+            disconnectButton.Height = 25;
+            disconnectButton.Click += DisconnectButton_Click;
+            disconnectButton.Enabled = false;
+            topPanel.Controls.Add(disconnectButton);
+
+            // Durum Etiketi
+            statusLabel = new LabelControl();
+            statusLabel.Text = "❌ Bağlı Değil";
+            statusLabel.ForeColor = Color.Red;
+            statusLabel.Location = new Point(10, 50);
+            statusLabel.Width = 200;
+            topPanel.Controls.Add(statusLabel);
+
+            // ===== ORTA PANEL - MESAJLAR =====
+            messageGridControl = new GridControl();
+            messageGridControl.Dock = DockStyle.Fill;
+            this.Controls.Add(messageGridControl);
+
+            // Grid View (GridControl ile ilişkilendir)
+            gridView = new GridView(messageGridControl);
+            messageGridControl.MainView = gridView;
+            messageGridControl.ViewCollection.Add(gridView);
+
+            gridView.OptionsBehavior.Editable = false;
+            gridView.OptionsBehavior.ReadOnly = true;
+            gridView.OptionsView.ShowGroupPanel = false;
+            gridView.OptionsView.ShowIndicator = false;
+            gridView.OptionsView.ColumnAutoWidth = false;
+
+            var colSender = gridView.Columns.AddField("Gönderen");
+            colSender.FieldName = "Gönderen";
+            colSender.Width = 120;
+            colSender.Caption = "Gönderen";
+            colSender.Visible = true;
+            colSender.VisibleIndex = 0;
+
+            var colMessage = gridView.Columns.AddField("Mesaj");
+            colMessage.FieldName = "Mesaj";
+            colMessage.Width = 520;
+            colMessage.Caption = "Mesaj";
+            colMessage.Visible = true;
+            colMessage.VisibleIndex = 1;
+
+            var colTime = gridView.Columns.AddField("Zaman");
+            colTime.FieldName = "Zaman";
+            colTime.Width = 120;
+            colTime.Caption = "Zaman";
+            colTime.Visible = true;
+            colTime.VisibleIndex = 2;
+
+            messageGridControl.DataSource = messages;
+
+            // ===== ALT PANEL - MESAJ GÖNDERME =====
+            bottomPanel = new PanelControl();
+            bottomPanel.Dock = DockStyle.Bottom;
+            bottomPanel.Height = 100;
+            bottomPanel.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            bottomPanel.BackColor = Color.FromArgb(240, 240, 240);
+            bottomPanel.Padding = new Padding(10);
+            this.Controls.Add(bottomPanel);
+
+            // Mesaj TextEdit
+            messageTextEdit = new MemoEdit();
+            messageTextEdit.Location = new Point(10, 10);
+            messageTextEdit.Width = 650;
+            messageTextEdit.Height = 80;
+            messageTextEdit.Text = "";
+            messageTextEdit.Properties.ScrollBars = ScrollBars.Both;
+            bottomPanel.Controls.Add(messageTextEdit);
+
+            // Gönder Butonu
+            sendButton = new SimpleButton();
+            sendButton.Text = "Gönder";
+            sendButton.Location = new Point(670, 10);
+            sendButton.Width = 100;
+            sendButton.Height = 80;
+            sendButton.Click += SendButton_Click;
+            sendButton.Enabled = false;
+            bottomPanel.Controls.Add(sendButton);
+        }
+
+        private void ConnectButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(usernameTextEdit.Text))
+            {
+                XtraMessageBox.Show("Lütfen kullanıcı adı girin!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            username = usernameTextEdit.Text;
+
+            try
+            {
+                clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                clientSocket.Connect(new IPEndPoint(IPAddress.Parse(serverTextEdit.Text), (int)portSpinEdit.Value));
+                isConnected = true;
+
+                // Bağlantı mesajı gönder
+                string connectMsg = $"CONNECT:{username}";
+                clientSocket.Send(Encoding.UTF8.GetBytes(connectMsg));
+
+                statusLabel.Text = "✓ Bağlı";
+                statusLabel.ForeColor = Color.Green;
+                connectButton.Enabled = false;
+                disconnectButton.Enabled = true;
+                sendButton.Enabled = true;
+                usernameTextEdit.Enabled = false;
+                serverTextEdit.Enabled = false;
+                portSpinEdit.Enabled = false;
+
+                AddSystemMessage($"{username} sunucuya bağlandı");
+
+                Task.Run(() => ReceiveMessages());
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show($"Bağlantı hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isConnected = false;
+            }
+        }
+
+        private void DisconnectButton_Click(object sender, EventArgs e)
+        {
+            Disconnect();
+        }
+
+        private void SendButton_Click(object sender, EventArgs e)
+        {
+            if (!isConnected || string.IsNullOrEmpty(messageTextEdit.Text))
+            {
+                XtraMessageBox.Show("Bağlı değilsiniz veya mesaj boş!", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                string message = messageTextEdit.Text.Trim();
+                string fullMsg = $"{username}: {message}";
+                byte[] data = Encoding.UTF8.GetBytes(fullMsg);
+                clientSocket.Send(data);
+
+                AddMessage(username, message, "Benden");
+                messageTextEdit.Clear();
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show($"Mesaj gönderme hatası: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ReceiveMessages()
+        {
+            byte[] buffer = new byte[4096];
+
+            try
+            {
+                while (isConnected)
+                {
+                    int bytesRead = clientSocket.Receive(buffer);
+
+                    if (bytesRead > 0)
+                    {
+                        string receivedMsg = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+
+                        this.Invoke((Action)(() =>
+                        {
+                            if (receivedMsg.StartsWith("CONNECT:"))
+                            {
+                                string user = receivedMsg.Replace("CONNECT:", "");
+                                AddSystemMessage($"{user} sohbete katıldı");
+                            }
+                            else if (receivedMsg.Contains(":"))
+                            {
+                                string[] parts = receivedMsg.Split(new[] { ':' }, 2);
+                                if (parts.Length == 2)
+                                {
+                                    AddMessage(parts[0], parts[1].Trim(), "Diğerleri");
+                                }
+                            }
+                        }));
+                    }
+                    else
+                    {
+                        isConnected = false;
+                    }
+                }
+            }
+            catch
+            {
+                if (isConnected)
+                {
+                    this.Invoke((Action)(() =>
+                    {
+                        XtraMessageBox.Show("Sunucu bağlantısı kesildi!", "Bağlantı Hatası", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Disconnect();
+                    }));
+                }
+            }
+        }
+
+        private void AddMessage(string sender, string messageText, string type)
+        {
+            var msg = new ChatMessage
+            {
+                Gönderen = sender,
+                Mesaj = messageText,
+                Zaman = DateTime.Now.ToString("HH:mm:ss"),
+                Tip = type
+            };
+
+            messages.Add(msg);
+
+            // Son mesaja kaydır
+            if (gridView.RowCount > 0)
+            {
+                gridView.FocusedRowHandle = gridView.RowCount - 1;
+            }
+        }
+
+        private void AddSystemMessage(string message)
+        {
+            var msg = new ChatMessage
+            {
+                Gönderen = "SİSTEM",
+                Mesaj = message,
+                Zaman = DateTime.Now.ToString("HH:mm:ss"),
+                Tip = "Sistem"
+            };
+
+            messages.Add(msg);
+
+            if (gridView.RowCount > 0)
+            {
+                gridView.FocusedRowHandle = gridView.RowCount - 1;
+            }
+        }
+
+        private void Disconnect()
+        {
+            if (clientSocket != null)
+            {
+                try
+                {
+                    clientSocket.Close();
+                }
+                catch { }
+                clientSocket = null;
+            }
+
+            isConnected = false;
+            statusLabel.Text = "❌ Bağlı Değil";
+            statusLabel.ForeColor = Color.Red;
+            connectButton.Enabled = true;
+            disconnectButton.Enabled = false;
+            sendButton.Enabled = false;
+            usernameTextEdit.Enabled = true;
+            serverTextEdit.Enabled = true;
+            portSpinEdit.Enabled = true;
+
+            AddSystemMessage($"{username} çıkış yaptı");
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            Disconnect();
+            base.OnFormClosing(e);
+        }
+    }
+
+    // Chat Mesaj Modeli
+    public class ChatMessage
+    {
+        public string Gönderen { get; set; }
+        public string Mesaj { get; set; }
+        public string Zaman { get; set; }
+        public string Tip { get; set; }
+    }
+
+    // Ana Program
+    static class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
+        }
+    }
+}
