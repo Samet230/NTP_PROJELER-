@@ -1,0 +1,40 @@
+{
+  "Signatures": {
+    "44d88612fea8a8f36de82e1278abb02f": {
+      "ThreatName": "EICAR-Test-File",
+      "ThreatType": 7,
+      "Severity": 1,
+      "Description": "EICAR Antivirüs Test Dosyası - Bu gerçek bir tehdit değildir, sadece antivirüs yazılımlarını test etmek için kullanılır.",
+      "DateAdded": "2024-01-01T00:00:00"
+    },
+    "275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f": {
+      "ThreatName": "EICAR-Test-File",
+      "ThreatType": 7,
+      "Severity": 1,
+      "Description": "EICAR Antivirüs Test Dosyası - Bu gerçek bir tehdit değildir, sadece antivirüs yazılımlarını test etmek için kullanılır.",
+      "DateAdded": "2024-01-01T00:00:00"
+    },
+    "e99a18c428cb38d5f260853678922e03": {
+      "ThreatName": "Win32.Sample.Virus",
+      "ThreatType": 1,
+      "Severity": 3,
+      "Description": "Örnek virüs imzası - Simülasyon amaçlı",
+      "DateAdded": "2024-01-01T00:00:00"
+    },
+    "d41d8cd98f00b204e9800998ecf8427e": {
+      "ThreatName": "Trojan.Generic.Backdoor",
+      "ThreatType": 2,
+      "Severity": 4,
+      "Description": "Örnek trojan imzası - Simülasyon amaçlı",
+      "DateAdded": "2024-01-01T00:00:00"
+    },
+    "082a2990053d28ded2b6dbb4e58dec49": {
+      "ThreatName": "CustomTest.Malware.Simulation",
+      "ThreatType": 1,
+      "Severity": 3,
+      "Description": "Özel test virüsü - Antivirüs simülasyonu test dosyası",
+      "DateAdded": "2024-12-23T00:00:00"
+    }
+  },
+  "LastUpdated": "2024-12-23T00:00:00"
+}

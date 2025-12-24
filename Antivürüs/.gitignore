@@ -1,0 +1,9 @@
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.log
+build_errors.txt
+test_build_errors.txt
+hash_output.txt
