@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon></ApplicationIcon>
+    <AssemblyName>ChatBot_LLM</AssemblyName>
+    <RootNamespace>ChatBot_LLM</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- DevExpress WinForms Paketleri -->
+    <PackageReference Include="DevExpress.Win" Version="25.1.3" />
+    <PackageReference Include="DevExpress.Win.Design" Version="25.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+  </ItemGroup>
+
+</Project>
